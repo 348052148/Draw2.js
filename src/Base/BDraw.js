@@ -23,7 +23,7 @@ class BDraw extends BObject{
             for(let ac in this.acObj){
                 let acobj = this.acObj[ac];
                 if(acobj.isActive){
-                    acobj.executed(this);
+                    acobj.executed(this,contact.context);
                 }
             }
         }

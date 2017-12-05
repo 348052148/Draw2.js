@@ -12,6 +12,9 @@ import BProgressBar from './UI/BProgressBar.js'
 import BExplorer from './UI/BExplorer.js'
 import BImageSprite from './Sprite/BImageSprite.js'
 import BAnimate from './Actions/BAnimate.js'
+import BInvertColor from "./Actions/BInvertColor.js";
+import forward from './Assets/image/forward.png'
+import filterJpg from './Assets/image/filter.jpg'
 let director = new BDirector();
 
 
@@ -28,12 +31,14 @@ let sceneLayer3 = new BScene(800,600);
 let sceneLayer4 = new BScene(800,600);
 let sceneLayer5 = new BScene(800,600);
 let sceneLayer6 = new BScene(800,600);
+let sceneLayer7 = new BScene(800,600);
 director.addScene(sceneLayer1);
 director.addScene(sceneLayer2);
 director.addScene(sceneLayer3);
 director.addScene(sceneLayer4);
 director.addScene(sceneLayer5);
 director.addScene(sceneLayer6);
+director.addScene(sceneLayer7);
 
 let rectSprite1 = new BSprite(100,100);
 
@@ -108,7 +113,9 @@ explorer.loadImages({
     PaperBoy2: "http://img.taopic.com/uploads/allimg/140322/235058-1403220K93993.jpg",
     PaperBoy3: "http://img.taopic.com/uploads/allimg/140320/235006-140320195A921.jpg",
     PaperBoy4: "http://pic18.nipic.com/20111206/2256974_131330799000_2.jpg",
-    // PaperBoy100: "../../Assets/image/forward.png"
+    PaperBoy5: filterJpg,
+    PaperBoy100: forward
+
 
 },function (loadedImages,numImages) { //加载中回调
     progressBar.setLength(numImages);
@@ -128,6 +135,19 @@ explorer.loadImages({
     animateSprite.setPosition([200,200]);
     animateSprite.runAction(banimate);
     sceneLayer6.addChild(animateSprite);
+
+
+    let filterSprite = new BImageSprite();
+
+    let invertColor = new BInvertColor();
+
+    console.log(explorer.IMG['PaperBoy5']);
+
+    filterSprite.setImageData(explorer.IMG['PaperBoy5']);
+
+    filterSprite.runAction(invertColor);
+
+    sceneLayer7.addChild(filterSprite);
 
 });
 
@@ -161,7 +181,7 @@ for(let j=0;j<20;j++){
 }
 
 
-director.switchScene(sceneLayer6);
+director.switchScene(sceneLayer7);
 
 director.run();
 

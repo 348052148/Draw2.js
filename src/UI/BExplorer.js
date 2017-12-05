@@ -30,6 +30,7 @@ class BExplorer{
             };
 
             this.IMG[src].src = sources[src];
+            // this.IMG[src].crossOrigin = "Anonymous";
         }
     }
 }

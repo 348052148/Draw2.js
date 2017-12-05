@@ -52,7 +52,6 @@ class BNode extends BContainer{
 
             //执行自己节点拥有的动作
             if(this.nodeList[i].node.actions!=undefined && this.nodeList[i].node.actions!=null){
-                contact.obj = this;
                 this.nodeList[i].node.actions(contact);
             }
 

@@ -147,13 +147,13 @@ class BPaint {
     };
 
     //----------------------------数据截取--------------------------------------
-    createImageData(){
+    createImageData(sw,sh){
         return this.context.createImageData(sw,sh);
     };
-    getImageData(){
+    getImageData(sx,sy,sw,sh){
         return this.context.getImageData(sx,sy,sw,sh);
     };
-    putImageData(){
+    putImageData(data,dx,dy,dirtyX,dirtyY,dirtyWidth,dirtyHeight){
         return this.context.putImageData(data,dx,dy,dirtyX,dirtyY,dirtyWidth,dirtyHeight);
     };
 }
