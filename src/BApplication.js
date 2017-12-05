@@ -15,7 +15,7 @@ class BApplication {
     }
 
     createWindow(x,y,w,h,borderStyle,ele,fps){
-        var canvas=document.createElement("canvas");
+        let canvas=document.createElement("canvas");
         canvas.style.left=x+'px';
         canvas.style.top=y+'px';
         canvas.width=w;
