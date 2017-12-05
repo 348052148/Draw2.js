@@ -17,14 +17,13 @@ class BDraw extends BObject{
     }
 
 
-    actions(){
+    actions(contact){
         if(!this.isActionActive) return false;
         if(this.acObj!=undefined && this.acObj!=null){
             for(let ac in this.acObj){
                 let acobj = this.acObj[ac];
                 if(acobj.isActive){
                     acobj.executed(this);
-                    acobj.draw(this);
                 }
             }
         }

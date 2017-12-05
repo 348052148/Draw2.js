@@ -30,7 +30,7 @@ class BTextSprite extends BSprite{
     };
 
     draw(contact){
-        this.Paint = new BPaint(contact.context);
+        this.Paint = BPaint.from(contact.context);
         this.width=this.Paint.measureText(this.tobj.text).width;
 
         this.Paint.setColor(this.color);

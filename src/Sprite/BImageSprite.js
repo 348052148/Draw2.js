@@ -21,7 +21,7 @@ class BImageSprite extends BSprite{
         this.height=elem.height;
     };
     draw(contact){
-        this.Paint = new BPaint(contact.context);
+        this.Paint = BPaint.from(contact.context);
 
         if(this.imgInfo.model == 'normal'){
             this.Paint.drawImage(this.imgInfo.elem,this.x(),this.y(),this.width,this.height);

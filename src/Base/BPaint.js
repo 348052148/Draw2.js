@@ -5,6 +5,12 @@ class BPaint {
         this.context = context;
     }
 
+    static from(context){
+        if(BPaint.instances == null)
+            BPaint.instances = new BPaint(context);
+        return BPaint.instances;
+    }
+
     //墨水设置
     setColor(color) {
         this.context.strokeStyle = color;

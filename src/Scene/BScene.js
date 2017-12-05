@@ -10,8 +10,7 @@ class BScene extends BNode{
 
     draw(contact){
         // this.Paint.clearRect(0,0,this.width,this.height);
-        let paint = new BPaint(contact.context);
-        paint.clearRect(0,0,this.width,this.height);
+        BPaint.from(contact.context).clearRect(0,0,this.width,this.height);
         this.topDraw(contact);
         // console.log('DSCENE');
     };

@@ -3,7 +3,6 @@ import BPaint from '../Base/BPaint.js'
 class BImageButton extends BNode{
     constructor(){
         super();
-        this.Paint = new BPaint();
         this.backgoundImage = {};
 
         this.text = 'button';
@@ -23,7 +22,7 @@ class BImageButton extends BNode{
 
 
     draw(contact){
-        this.Paint = new BPaint(contact.context);
+        this.Paint = BPaint.from(contact.context);
         this.textWidth = this.Paint.measureText(this.text).width;
 
         this.Paint.drawImage(this.backgoundImage,this.x(),this.y(),this.width,this.height);

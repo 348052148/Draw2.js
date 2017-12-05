@@ -11,12 +11,13 @@ import BPaint from './Base/BPaint.js'
 import BProgressBar from './UI/BProgressBar.js'
 import BExplorer from './UI/BExplorer.js'
 import BImageSprite from './Sprite/BImageSprite.js'
+import BAnimate from './Actions/BAnimate.js'
 let director = new BDirector();
 
 
 let win = new BApplication();
 win.createWindow(0,0,800,600,'1px solid #000',document.body,60);
-win.init()
+win.init();
 
 
 director.init(win);
@@ -62,7 +63,7 @@ for(let i=0;i<2000;i++){
     let p1 = new BSprite(10,10);
     p1.i = i;
     p1.draw = function (contact) {
-        this.Paint = new BPaint(contact.context);
+        this.Paint = BPaint.from(contact.context);
         let r = parseInt(Math.random()*255);
         let g = parseInt(Math.random()*255);
         let b = parseInt(Math.random()*255);
@@ -94,7 +95,7 @@ for(let i=0;i<2000;i++){
 
 
 //todo 进度条
-var progressBar = new BProgressBar();
+let progressBar = new BProgressBar();
 progressBar.setWidth(win.width-200);
 progressBar.setHeight(10);
 progressBar.setPosition([100+(win.width-200)/2,win.height/2]);
@@ -102,25 +103,30 @@ sceneLayer3.addChild(progressBar);
 
 progressBar.runAction(new BRotate(0.01));
 
-var explorer = new BExplorer(director);
+let explorer = new BExplorer(director);
 explorer.loadImages({
     PaperBoy2: "http://img.taopic.com/uploads/allimg/140322/235058-1403220K93993.jpg",
     PaperBoy3: "http://img.taopic.com/uploads/allimg/140320/235006-140320195A921.jpg",
     PaperBoy4: "http://pic18.nipic.com/20111206/2256974_131330799000_2.jpg",
-    PaperBoy100: "../Assets/image/forward.png"
+    // PaperBoy100: "../../Assets/image/forward.png"
 
 },function (loadedImages,numImages) { //加载中回调
     progressBar.setLength(numImages);
     progressBar.setVal(loadedImages);
+
+    console.log('Compose+');
 },function () { //加载完成回调
 
+    console.log('Compose');
     //动画
-    var animateSprite = new BSprite(200,200);
-    var banimate = new BAnimate(200);
-    banimate.splitImage(8,explorer.IMG['PaperBoy100']);
+    let animateSprite = new BSprite(100,100);
+    animateSprite.draw=function () {
+
+    };
+    let banimate = new BAnimate(200);
+    banimate.splitImage(4,explorer.IMG['PaperBoy4']);
     animateSprite.setPosition([200,200]);
     animateSprite.runAction(banimate);
-    animateSprite.runAction(new BMoveTo(600,200,1));
     sceneLayer6.addChild(animateSprite);
 
 });
@@ -156,16 +162,6 @@ for(let j=0;j<20;j++){
 
 
 director.switchScene(sceneLayer6);
-
-
-
-
-
-
-
-
-
-
 
 director.run();
 

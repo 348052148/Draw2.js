@@ -19,12 +19,14 @@ class BExplorer{
 
             //图片执行完成
             this.IMG[src].onload = function(){
-                //当所有图片加载完成时，执行回调函数callback
-                if (++loadedImages >= numImages) {
-                    callback();
-                }
+                loadedImages ++;
                 //重绘一个进度条
                 func(loadedImages,numImages);
+
+                //当所有图片加载完成时，执行回调函数callback
+                if (loadedImages >= numImages) {
+                    callback();
+                }
             };
 
             this.IMG[src].src = sources[src];

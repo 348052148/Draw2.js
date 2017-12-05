@@ -50,8 +50,10 @@ class BNode extends BContainer{
                 contact.context.restore();
             }
 
+            //执行自己节点拥有的动作
             if(this.nodeList[i].node.actions!=undefined && this.nodeList[i].node.actions!=null){
-                this.nodeList[i].node.actions();
+                contact.obj = this;
+                this.nodeList[i].node.actions(contact);
             }
 
             //判断是否为非point属性 设置基础属性
