@@ -1,6 +1,6 @@
 import BAction from './BAction.js'
 import BPaint from '../Base/BPaint.js'
-class BInvertColor extends BAction{
+class BFilterPiex extends BAction{
 
     executed(obj,context){
 
@@ -8,24 +8,17 @@ class BInvertColor extends BAction{
 
         let canvasData = Paint.getImageData(obj.x(),obj.y(),obj.width,obj.height);
 
-        // let binaryData = canvasData.data;
         let len = obj.width*obj.height;
-        // this.colorAdjustProcess(canvasData.data,len );
 
-        for (let i = 0; i < len; i += 4) {
-            let r = canvasData.data[i];
-            let g = canvasData.data[i + 1];
-            let b = canvasData.data[i + 2];
-            canvasData.data[i] = 255-r;
-            canvasData.data[i + 1] = 255-g;
-            canvasData.data[i + 2] = 255-b;
-        }
+        // this.colorInvertProcess(canvasData.data,len);
+        this.mirrorProcess(context,canvasData);
 
         context.putImageData(canvasData, 0, 0);
     }
 
+    //todo 反色
     colorInvertProcess(binaryData, l){
-        for (let i = 0; i < l; i += 4) {
+        for (let i = 0; i < l*4; i += 4) {
             let r = binaryData[i];
             let g = binaryData[i + 1];
             let b = binaryData[i + 2];
@@ -35,8 +28,9 @@ class BInvertColor extends BAction{
         }
     }
 
+    //todo 复古
     colorAdjustProcess(binaryData, l) {
-        for (let i = 0; i < l; i += 4) {
+        for (let i = 0; i < l*4; i += 4) {
             let r = binaryData[i];
             let g = binaryData[i + 1];
             let b = binaryData[i + 2];
@@ -47,8 +41,8 @@ class BInvertColor extends BAction{
         }
     }
 
+    //todo 模糊
     blurProcess(context, canvasData) {
-        console.log("Canvas Filter - blur process");
         let tempCanvasData = this.copyImageData(context, canvasData);
         let sumred = 0.0, sumgreen = 0.0, sumblue = 0.0;
         for ( let x = 0; x < tempCanvasData.width; x++) {
@@ -95,6 +89,7 @@ class BInvertColor extends BAction{
         }
     }
 
+    //todo 雕塑
     reliefProcess(context, canvasData) {
         let tempCanvasData = this.copyImageData(context, canvasData);
         for ( let x = 1; x < tempCanvasData.width-1; x++)
@@ -153,6 +148,7 @@ class BInvertColor extends BAction{
         }
     }
 
+    //todo 镜像反转
     mirrorProcess(context, canvasData) {
         let tempCanvasData = this.copyImageData(context, canvasData);
         for ( let x = 0; x < tempCanvasData.width; x++) // column
@@ -181,4 +177,4 @@ class BInvertColor extends BAction{
     }
 }
 
-export default BInvertColor;
+export default BFilterPiex;

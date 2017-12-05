@@ -12,7 +12,7 @@ import BProgressBar from './UI/BProgressBar.js'
 import BExplorer from './UI/BExplorer.js'
 import BImageSprite from './Sprite/BImageSprite.js'
 import BAnimate from './Actions/BAnimate.js'
-import BInvertColor from "./Actions/BInvertColor.js";
+import BFilterPiex from "./Actions/BFilterPiex.js";
 import forward from './Assets/image/forward.png'
 import filterJpg from './Assets/image/filter.jpg'
 let director = new BDirector();
@@ -139,13 +139,13 @@ explorer.loadImages({
 
     let filterSprite = new BImageSprite();
 
-    let invertColor = new BInvertColor();
+    let filterPiex = new BFilterPiex();
 
     console.log(explorer.IMG['PaperBoy5']);
 
     filterSprite.setImageData(explorer.IMG['PaperBoy5']);
 
-    filterSprite.runAction(invertColor);
+    filterSprite.runAction(filterPiex);
 
     sceneLayer7.addChild(filterSprite);
 
