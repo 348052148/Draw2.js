@@ -76,10 +76,16 @@ class BNode extends BContainer{
 
     //----Position--
     x(){
+        if(this.b2Body != null){
+            return this.b2Body.GetPosition().x*30;
+        }
         return this.position.x();
     }
 
     y(){
+        if(this.b2Body != null){
+            return this.b2Body.GetPosition().y*30;
+        }
         return this.position.y();
     }
 

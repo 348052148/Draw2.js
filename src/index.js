@@ -87,7 +87,7 @@ cricleSprite.draw = function(contact){
     paint.setColor('#000');
     // this.setPosition([this.b2Body.GetPosition().x*30,this.b2Body.GetPosition().y*30]);
     contact.context.beginPath();
-    contact.context.arc(this.b2Body.GetPosition().x*30,this.b2Body.GetPosition().y*30,this.width/2,0,2*Math.PI);
+    contact.context.arc(this.x(),this.y(),this.width/2,0,2*Math.PI);
     contact.context.stroke();
 };
 
