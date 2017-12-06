@@ -18,6 +18,7 @@ class BScene extends BNode{
     toString(){
         return 'BScene Object';
     };
+
 }
 
 export default BScene;

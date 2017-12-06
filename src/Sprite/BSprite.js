@@ -1,11 +1,15 @@
 import BNode from '../Node/BNode.js'
 import BPaint from '../Base/BPaint.js'
+import Box2D from 'box2dweb'
 class BSprite extends BNode {
 
     constructor(w,h){
         super();
         this.width = w;
         this.height = h;
+        this.isBody = false;
+
+        this.b2Body = null;
     }
 
     draw(contact) {
@@ -23,6 +27,9 @@ class BSprite extends BNode {
     toString(){
         return 'BSprite Object';
     };
+
+
+
 
 }
 

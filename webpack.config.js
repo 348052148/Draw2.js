@@ -9,7 +9,7 @@ function resolve (dir) {
 
 module.exports = {
     entry:{
-        page1:"./src/index.js",
+        drawjs:["./src/index.js"]
     },
 
     output: {
@@ -32,8 +32,11 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                loader: 'babel-loader',
+                use:[
+                    'babel-loader'
+                ],
                 include: [resolve('src')]
+
             },
             {
                 test: /\.(png|jpe?g|gif|ico)(\?\S*)?$/,

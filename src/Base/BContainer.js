@@ -1,4 +1,5 @@
 import BDraw from './BDraw.js'
+import Box2D from 'box2dweb'
 class BContainer extends BDraw {
 
     constructor(){
@@ -12,7 +13,10 @@ class BContainer extends BDraw {
         this.nodeList.push({uuid:container.UUID,node:container});
         container.setParentNode(this);
         this.z_index ++;
+
     };
+
+
 
     setParentNode(container) {
         this.parentNode = container;

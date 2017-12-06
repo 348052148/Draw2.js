@@ -10,7 +10,6 @@ class BFilterPiex extends BAction{
 
         let len = obj.width*obj.height;
 
-        // this.colorInvertProcess(canvasData.data,len);
         this.mirrorProcess(context,canvasData);
 
         context.putImageData(canvasData, 0, 0);
@@ -28,7 +27,7 @@ class BFilterPiex extends BAction{
         }
     }
 
-    //todo 复古
+    //todo 灰色调
     colorAdjustProcess(binaryData, l) {
         for (let i = 0; i < l*4; i += 4) {
             let r = binaryData[i];
@@ -89,7 +88,7 @@ class BFilterPiex extends BAction{
         }
     }
 
-    //todo 雕塑
+    //todo 浮雕
     reliefProcess(context, canvasData) {
         let tempCanvasData = this.copyImageData(context, canvasData);
         for ( let x = 1; x < tempCanvasData.width-1; x++)
@@ -119,6 +118,7 @@ class BFilterPiex extends BAction{
         }
     }
 
+    //todo 雕刻
     diaokeProcess(context, canvasData) {
         let tempCanvasData = this.copyImageData(context, canvasData);
         for ( let x = 1; x < tempCanvasData.width-1; x++)
@@ -148,7 +148,7 @@ class BFilterPiex extends BAction{
         }
     }
 
-    //todo 镜像反转
+    //todo 镜像
     mirrorProcess(context, canvasData) {
         let tempCanvasData = this.copyImageData(context, canvasData);
         for ( let x = 0; x < tempCanvasData.width; x++) // column

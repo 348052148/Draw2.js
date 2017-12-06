@@ -60,7 +60,7 @@ class BDirector {
                 return id;
             }
         }
-        if(!this.isRun){
+        if(!this.isRun && scene!=null){
             BFrame.scene = scene;
             BFrame.application  = this.application;
             BFrame();
@@ -95,8 +95,15 @@ class BDirector {
 }
 
 function BFrame(time) {
-    BFrame.application.fps = 1000/(time-BFrame.preTime);
+    // BFrame.application.fps = 1000/(time-BFrame.preTime);
     BFrame.preTime = time;
+    BFrame.application.world.Step(
+        1 / 60   //frame-rate
+        ,  10       //velocity iterations
+        ,  10       //position iterations
+    );
+    BFrame.application.world.DrawDebugData();
+    BFrame.application.world.ClearForces();
     //todo 状态保存
     BFrame.application.BContext.save();
     BFrame.scene.draw({context:BFrame.application.BContext,pWidth:BFrame.application.width,pHeight:BFrame.application.height});

@@ -1,8 +1,8 @@
 //融合volume
 import BContainer from '../Base/BContainer.js'
-import BPoint from '../Base/BPoint.js'
 import BActions from '../Base/BActions.js'
 import BPoint from '../Base/BPoint.js'
+import Box2D from 'box2dweb'
 class BNode extends BContainer{
 
     constructor(){
@@ -25,6 +25,7 @@ class BNode extends BContainer{
         this.corePos = new BPoint();
         //基础坐标
         this.basePos = new BPoint();
+        //中心点
     }
 
     topDraw(contact){
@@ -87,6 +88,7 @@ class BNode extends BContainer{
     setPosition(pos){
         this.position.setPosition(pos);
         this._setCospos();
+        this._setWorldPos();
     }
 
     //获取矩阵
@@ -104,6 +106,7 @@ class BNode extends BContainer{
         this.width = this.width*this.scaleX;
         this.height = this.height*this.scaleY;
         this._setCospos();
+        this._setWorldPos();
     }
 
     setRotate(angle){
@@ -113,6 +116,15 @@ class BNode extends BContainer{
     //模拟 scale 操作
     _setCospos(){
         this.corePos = {x:this.x()+(this.width)/2,y:this.y()+(this.height)/2};
+    }
+
+    //world
+    _setWorldPos(){
+        if(this.b2Body != null){
+            // this.b2Body.position.x = (this.x()+this.width/2)/30;    //X轴 * 60
+            // this.b2Body.position.y = (this.y()+this.height/2)/30;    //Y轴 * 30
+            this.b2Body.SetPosition(new Box2D.Common.Math.b2Vec2((this.x()+this.width/2)/30,(this.y()+this.height/2)/30));
+        }
     }
 
 

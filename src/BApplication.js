@@ -8,6 +8,7 @@ class BApplication {
         this.fps = 0;
         this.canvasObj = null;
         this.canvasId = BUtils.uuid();
+        this.world = null;
 
     }
     init(){
