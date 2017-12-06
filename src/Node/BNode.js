@@ -26,6 +26,8 @@ class BNode extends BContainer{
         //基础坐标
         this.basePos = new BPoint();
         //中心点
+
+        this.box2dPos = new BPoint();
     }
 
     topDraw(contact){
@@ -86,9 +88,10 @@ class BNode extends BContainer{
     }
 
     setPosition(pos){
+        this._setBox2DPos(pos[0],pos[1]);
         this.position.setPosition(pos);
         this._setCospos();
-        this._setWorldPos();
+        // this._setWorldPos();
     }
 
     //获取矩阵
@@ -106,7 +109,7 @@ class BNode extends BContainer{
         this.width = this.width*this.scaleX;
         this.height = this.height*this.scaleY;
         this._setCospos();
-        this._setWorldPos();
+        // this._setWorldPos();
     }
 
     setRotate(angle){
@@ -118,7 +121,14 @@ class BNode extends BContainer{
         this.corePos = {x:this.x()+(this.width)/2,y:this.y()+(this.height)/2};
     }
 
-    //world
+    //todo 改变本地坐标相当于改变box2的坐标 顺便设置本地坐标
+    _setBox2DPos(x,y){
+        if(this.b2Body != null){
+            this.b2Body.SetPosition(new Box2D.Common.Math.b2Vec2(x/30,y/30));
+        }
+    }
+
+    //todo world 由 本地系统坐标改变映射到box2d
     _setWorldPos(){
         if(this.b2Body != null){
             // this.b2Body.position.x = (this.x()+this.width/2)/30;    //X轴 * 60

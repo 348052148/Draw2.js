@@ -17,17 +17,17 @@ class BBollMove extends BAction{
 
     executed(obj){
 
-        if(obj.y() >= this.pos[1] ){
+        if(obj.y() >= this.pos[1] - obj.height/2 ){
             this.yflag=1;
         }
-        if(obj.x()>= this.pos[0] ){
+        if(obj.x()>= this.pos[0] - obj.width/2 ){
             this.xflag=1;
         }
 
-        if(obj.x()<=0){
+        if(obj.x()<=obj.width/2){
             this.xflag=0;
         }
-        if(obj.y()<=0){
+        if(obj.y()<=obj.height/2){
             this.yflag=0;
         }
         if(this.xflag==0){

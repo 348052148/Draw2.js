@@ -69,11 +69,11 @@ class BPaint {
 
     //-------------------------------直接绘图-----------------------------------
     rect(x,y,w,h){
-        return this.context.rect(x,y,w,h);
+        return this.context.rect(x-w/2,y-h/2,w,h);
     };
     //绘制“被填充”的矩形
     fillRect(x,y,w,h){
-        return this.context.fillRect(x,y,w,h);
+        return this.context.fillRect(x-w/2,y-h/2,w,h);
     };
     //绘制矩形（无填充）
     strokeRect(x,y,w,h){
