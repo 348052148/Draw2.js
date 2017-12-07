@@ -48,6 +48,6 @@
     director.run();
 ```
 
-
+##### API 文档 https://github.com/348052148/Draw2.js/issues/1
 
 #### 欢迎大家进行交流。邮箱: 34852148@qq.com
