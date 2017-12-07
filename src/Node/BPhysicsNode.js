@@ -87,6 +87,7 @@ class BPhysicsNode extends BNode{
     //----Position--
     x(){
         if(this.b2Body != null){
+            // console.log(this.b2Body.GetWorldCenter());
             // this.setPosition([this.b2Body.GetPosition().x*this.posRate,this.b2Body.GetPosition().y*this.posRate]);
             this.position._x = this.b2Body.GetPosition().x*this.posRate;
             // this._setCospos();

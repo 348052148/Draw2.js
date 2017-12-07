@@ -137,6 +137,11 @@ rectSprite1.setBodyShape(new Box2D.Collision.Shapes.b2PolygonShape());
 scene.addChild(rectSprite1);
 
 
+app.event().on('keydown',function () {
+    console.log('mousedown');
+});
+
+
 
 director.run();
 
