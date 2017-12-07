@@ -1,6 +1,6 @@
 //融合之前老的
-import BObject from './BObject.js'
-class BDraw extends BObject{
+import BClone from './BClone.js'
+class BDraw extends BClone{
 
     constructor(){
         super();
@@ -12,7 +12,15 @@ class BDraw extends BObject{
         this.isActionActive  = true;
     }
 
+    beferDraw(){
+
+    }
+
     draw(){
+
+    }
+
+    lastDraw(){
 
     }
 

@@ -8,7 +8,6 @@ class BApplication {
         this.fps = 0;
         this.canvasObj = null;
         this.canvasId = BUtils.uuid();
-        this.world = null;
 
     }
     init(){
@@ -29,6 +28,8 @@ class BApplication {
         this.fps=fps;
         ele.appendChild(canvas);
         this.canvasObj = canvas;
+
+        this.init();
     }
     end(){}
     toDataURL() {

@@ -1,11 +1,13 @@
 import BUtils from '../Tools/BUtils.js'
 class BDirector {
 
-    constructor(){
-        this.game;
+    constructor(application){
+        this.application = application;
         this.sceneList=new Array();
         this.runScene=null;
         this.isRun = false;
+        //todo 物理世界
+        this.b2World = null;
     }
 
     addScene(scene){
@@ -97,16 +99,12 @@ class BDirector {
 function BFrame(time) {
     // BFrame.application.fps = 1000/(time-BFrame.preTime);
     BFrame.preTime = time;
-    BFrame.application.world.Step(
-        1 / 60   //frame-rate
-        ,  10       //velocity iterations
-        ,  10       //position iterations
-    );
-    BFrame.application.world.DrawDebugData();
-    BFrame.application.world.ClearForces();
     //todo 状态保存
     BFrame.application.BContext.save();
-    BFrame.scene.draw({context:BFrame.application.BContext,pWidth:BFrame.application.width,pHeight:BFrame.application.height});
+    //todo 作为顶级的场景绘制
+    BFrame.scene.draw({context:BFrame.application.BContext,pWidth:BFrame.application.width,pHeight:BFrame.application.height},BFrame.application.BContext);
+    //todo 进行子集
+    BFrame.scene.topDraw({context:BFrame.application.BContext,pWidth:BFrame.application.width,pHeight:BFrame.application.height});
     //todo 状态恢复
     BFrame.application.BContext.restore();
 

@@ -2,7 +2,6 @@
 import BContainer from '../Base/BContainer.js'
 import BActions from '../Base/BActions.js'
 import BPoint from '../Base/BPoint.js'
-import Box2D from 'box2dweb'
 class BNode extends BContainer{
 
     constructor(){
@@ -25,9 +24,6 @@ class BNode extends BContainer{
         this.corePos = new BPoint();
         //基础坐标
         this.basePos = new BPoint();
-        //中心点
-
-        this.box2dPos = new BPoint();
     }
 
     topDraw(contact){
@@ -44,11 +40,15 @@ class BNode extends BContainer{
                 //处理scale
 
                 // new BActions(context).scale(this.nodeList[i].node.scaleX,this.nodeList[i].node.scaleY);
-                new BActions(contact.context).rotate(this.nodeList[i].node.angle,this.nodeList[i].node.corePos);
+                new BActions(contact.context).rotate(this.nodeList[i].node.getAngle(),this.nodeList[i].node.corePos);
 
                 contact.pWidth = this.width;
                 contact.pHeight = this.height;
-                this.nodeList[i].node.draw(contact);
+                //todo 上下文对象
+                this.nodeList[i].node.context = contact.context;
+                this.nodeList[i].node.beferDraw(contact);
+                this.nodeList[i].node.draw(contact,contact.context);
+                this.nodeList[i].node.lastDraw(contact);
 
                 contact.context.restore();
             }
@@ -76,16 +76,10 @@ class BNode extends BContainer{
 
     //----Position--
     x(){
-        if(this.b2Body != null){
-            return this.b2Body.GetPosition().x*30;
-        }
         return this.position.x();
     }
 
     y(){
-        if(this.b2Body != null){
-            return this.b2Body.GetPosition().y*30;
-        }
         return this.position.y();
     }
 
@@ -94,7 +88,6 @@ class BNode extends BContainer{
     }
 
     setPosition(pos){
-        this._setBox2DPos(pos[0],pos[1]);
         this.position.setPosition(pos);
         this._setCospos();
         // this._setWorldPos();
@@ -103,6 +96,10 @@ class BNode extends BContainer{
     //获取矩阵
     getMatrix(){
         return [[this.x(),this.y()],[this.x()+this.width,this.y()],[this.x()+this.width,this.y()+this.height],[this.x(),this.y()+this.width]];
+    }
+
+    getAngle(){
+        return this.angle;
     }
 
 
@@ -124,25 +121,8 @@ class BNode extends BContainer{
 
     //模拟 scale 操作
     _setCospos(){
-        this.corePos = {x:this.x()+(this.width)/2,y:this.y()+(this.height)/2};
+        this.corePos = {x:this.x(),y:this.y()};
     }
-
-    //todo 改变本地坐标相当于改变box2的坐标 顺便设置本地坐标
-    _setBox2DPos(x,y){
-        if(this.b2Body != null){
-            this.b2Body.SetPosition(new Box2D.Common.Math.b2Vec2(x/30,y/30));
-        }
-    }
-
-    //todo world 由 本地系统坐标改变映射到box2d
-    _setWorldPos(){
-        if(this.b2Body != null){
-            // this.b2Body.position.x = (this.x()+this.width/2)/30;    //X轴 * 60
-            // this.b2Body.position.y = (this.y()+this.height/2)/30;    //Y轴 * 30
-            this.b2Body.SetPosition(new Box2D.Common.Math.b2Vec2((this.x()+this.width/2)/30,(this.y()+this.height/2)/30));
-        }
-    }
-
 
 }
 export default BNode;

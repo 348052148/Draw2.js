@@ -1,11 +1,15 @@
-import BNode from '../Node/BNode.js'
+import BPhysicsNode from "../Node/BPhysicsNode.js"
 import BPaint from '../Base/BPaint.js'
-class BSprite extends BNode {
+
+class BPhysicsSprite extends BPhysicsNode{
 
     constructor(w=100,h=100){
         super();
         this.width = w;
         this.height = h;
+        this.isBody = false;
+
+        this.b2Body = null;
     }
 
     draw(contact) {
@@ -24,9 +28,5 @@ class BSprite extends BNode {
         return 'BSprite Object';
     };
 
-
-
-
 }
-
-export default BSprite;
+export default BPhysicsSprite;

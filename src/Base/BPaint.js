@@ -73,11 +73,15 @@ class BPaint {
     };
     //绘制“被填充”的矩形
     fillRect(x,y,w,h){
+        // this.context.translate(w/2,h/2);
         return this.context.fillRect(x-w/2,y-h/2,w,h);
+        // this.context.translate(-w/2,-h/2);
     };
     //绘制矩形（无填充）
     strokeRect(x,y,w,h){
-        return this.context.strokeRect(x,y,w,h);
+        // this.context.translate(w/2,h/2);
+        return this.context.strokeRect(x-w/2,y-h/2,w,h);
+        // this.context.translate(-w/2,-h/2);
     };
     //在给定的矩形内清除指定的像素
     clearRect(x,y,w,h){
