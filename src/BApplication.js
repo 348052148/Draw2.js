@@ -1,5 +1,5 @@
 import BUtils from './Tools/BUtils.js'
-import BEvent from './Events/BEvent.js'
+import BEventEmitter from './Events/BEventEmitter.js'
 class BApplication {
 
     constructor(){
@@ -10,7 +10,7 @@ class BApplication {
         this.canvasObj = null;
         this.canvasId = BUtils.uuid();
 
-        this.eventLoop = new Array();
+        this.eventEmitter = BEventEmitter.from();
 
     }
     init(){
@@ -20,19 +20,15 @@ class BApplication {
     //todo 系统事件 继承dom原生事件
     initEvent(){
         ['keydown','keyup'].forEach( (eventType)=> {
-            document.addEventListener(eventType,()=>{
-                this.event().emit(eventType);
+            document.addEventListener(eventType,(event)=>{
+                this.eventEmitter.emit(eventType,event);
             });
         });
         ['mousedown','mouseup','mousemove','mouseout','mouseover','dblclick'].forEach((eventType) => {
-            this.canvasObj.addEventListener(eventType,()=>{
-                this.event().emit(eventType);
+            this.canvasObj.addEventListener(eventType,(event)=>{
+                this.eventEmitter.emit(eventType,event);
             });
         });
-    }
-
-    event(){
-        return BEvent.from(this.eventLoop);
     }
 
     createWindow(x,y,w,h,borderStyle,ele,fps){

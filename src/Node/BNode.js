@@ -2,6 +2,7 @@
 import BContainer from '../Base/BContainer.js'
 import BActions from '../Base/BActions.js'
 import BPoint from '../Base/BPoint.js'
+import BEvent from '../Events/BEvent.js'
 class BNode extends BContainer{
 
     constructor(){
@@ -24,8 +25,27 @@ class BNode extends BContainer{
         this.corePos = new BPoint();
         //基础坐标
         this.basePos = new BPoint();
+
+        this.event = new BEvent();
     }
 
+    //todo 事件
+    addEventListener(event,callback){
+        this.event.addEventListener(event,callback,this);
+    }
+    setMouseIn(flag){
+        this.event.isMouseIn = flag;
+    }
+    isMouseIn(){
+        return this.event.isMouseIn;
+    }
+    setFoucs(flag){
+        this.event.foucs = flag;
+    }
+    isFoucs(){
+        return this.event.foucs;
+    }
+    //todo 处理层级绘画
     topDraw(contact){
         for(var i=0;i<this.nodeList.length;i++){
 
@@ -95,7 +115,12 @@ class BNode extends BContainer{
 
     //获取矩阵
     getMatrix(){
-        return [[this.x(),this.y()],[this.x()+this.width,this.y()],[this.x()+this.width,this.y()+this.height],[this.x(),this.y()+this.width]];
+        return [
+            [this.x()-this.width/2,this.y()-this.height/2],
+            [this.x()+this.width/2,this.y()-this.height/2],
+            [this.x()+this.width/2,this.y()+this.height/2],
+            [this.x()-this.width/2,this.y()+this.height/2]
+        ];
     }
 
     getAngle(){

@@ -127,21 +127,56 @@ let brotate = new BRotate(0.1);
 
 scene.addChild(rectSprite);
 
-let rectSprite1 = new BPhysicsSprite(100,100);
-rectSprite1.setPosition([0,100]);
-rectSprite1.setBodyType(Box2D.Dynamics.b2Body.b2_staticBody);
-// rectSprite.setBodyType(Box2D.Dynamics.b2Body.b2_dynamicBody);
-
-rectSprite1.setBodyShape(new Box2D.Collision.Shapes.b2PolygonShape());
+let rectSprite1 = new BSprite(100,100);
+rectSprite1.setPosition([100,100]);
 
 scene.addChild(rectSprite1);
 
-
-app.event().on('keydown',function () {
-    console.log('mousedown');
+// rectSprite1.addEventListener('keydown',function () {
+//     console.log('按键事件');
+// });
+//
+// rectSprite1.addEventListener('mousedown',function () {
+//     console.log('鼠标按键事件');
+// });
+//
+// rectSprite1.addEventListener('mouseup',function () {
+//     console.log('鼠标按起事件');
+// });
+// rectSprite1.addEventListener('dblclick',function () {
+//     console.log('双击事件');
+// });
+//
+rectSprite1.addEventListener('mousemove',function () {
+    console.log('鼠标移动事件');
+});
+//
+rectSprite1.addEventListener('mouseout',function () {
+    console.log('鼠标移除事件');
+});
+//
+rectSprite1.addEventListener('mouseover',function () {
+    console.log('鼠标移ru事件');
+});
+//
+// rectSprite1.addEventListener('foucs',function () {
+//     console.log('获取焦点');
+// });
+// rectSprite1.addEventListener('blur',function () {
+//     console.log('失去焦点');
+// });
+//
+rectSprite.addEventListener('foucs',function () {
+    console.log('圆形获取了焦点');
+});
+//
+rectSprite.addEventListener('blur',function () {
+    console.log('圆形失去了焦点');
 });
 
-
+// rectSprite.addEventListener('mousemove',function () {
+//     console.log('鼠标移动事件');
+// });
 
 director.run();
 
