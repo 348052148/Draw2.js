@@ -17,6 +17,7 @@ import BAnimate from './Actions/BAnimate.js'
 import BFilterPiex from "./Actions/BFilterPiex.js";
 import forward from './Assets/image/forward.png'
 import filterJpg from './Assets/image/filter.jpg'
+import arrow from './Assets/image/arrow.png';
 
 import Box2D from 'box2dweb'
 
@@ -38,13 +39,28 @@ app.createWindow(0,0,800,800,'1px solid #000',document.body,60);
 
 let director = new BDirector(app);
 
-let scene = new BPhysicsScene([0,100]);
+
+let explorer = new BExplorer(director);
+explorer.loadImages({
+    arrow:arrow
+},function (loadedImages,numImages) { //加载中回调
+
+});
+
+
+let scene = new BPhysicsScene([0,9.8]);
+scene.width = 800;
+scene.height = 800;
+scene.setPosition([400,400]);
+scene.setDebug(false);
+
+console.log(scene.getMatrix());
 
 director.addScene(scene);
 
-let bodySprite = new BPhysicsSprite(300,60);
+let bodySprite = new BPhysicsSprite(800,30);
 
-bodySprite.setPosition([200,600]);
+bodySprite.setPosition([400,600]);
 
 bodySprite.draw = function(contact){
     let paint = BPaint.from(contact.context);
@@ -56,127 +72,59 @@ scene.addChild(bodySprite);
 //
 bodySprite.setBodyType(b2Body.b2_staticBody);
 let shape = new b2PolygonShape;
-shape.SetAsBox(bodySprite.width/bodySprite.pixelRate, bodySprite.height/bodySprite.pixelRate);
 bodySprite.setBodyShape(shape);
-//
-// console.log(shape instanceof  Box2D.Collision.Shapes.b2PolygonShape);
-//
-// let box = new BBollMove(-1,2,[800,800]);
-//
-// // bodySprite.runAction(box);
-//
-//
-// let cricleSprite = new BSprite(80,80);
-//
-// cricleSprite.draw = function(contact,context){
-//     let paint = BPaint.from(context);
-//     paint.setColor('#000');
-//     // this.setPosition([this.b2Body.GetPosition().x*30,this.b2Body.GetPosition().y*30]);
-//     context.beginPath();
-//     context.arc(this.x(),this.y(),this.width/2,0,2*Math.PI);
-//     context.stroke();
-// };
-//
-// cricleSprite.setBodyType(Box2D.Dynamics.b2Body.b2_dynamicBody);
-//
-// cricleSprite.setBodyShape(new Box2D.Collision.Shapes.b2CircleShape());
-//
-// cricleSprite.setPosition([140,40]);
-//
-// cricleSprite.setScale(0.5,0.5);
-//
-// scene.addChild(cricleSprite);
-//
-//
-// let cricleSprite1 = new BSprite(80,80);
-//
-// cricleSprite1.draw = function(contact,context){
-//     let paint = BPaint.from(context);
-//     paint.setColor('#000');
-//     // this.setPosition([this.b2Body.GetPosition().x*30,this.b2Body.GetPosition().y*30]);
-//     context.beginPath();
-//     context.arc(this.x(),this.y(),this.width/2,0,2*Math.PI);
-//     context.stroke();
-// };
-//
-// cricleSprite1.setBodyType(Box2D.Dynamics.b2Body.b2_dynamicBody);
-//
-// cricleSprite1.setBodyShape(new Box2D.Collision.Shapes.b2CircleShape());
-//
-// cricleSprite1.setPosition([170,100]);
-//
-// cricleSprite1.setScale(0.5,0.5);
-//
-// scene.addChild(cricleSprite1);
 
 
-let rectSprite = new BPhysicsSprite(100,100);
-// rectSprite.draw=function () {
-//
-// }
-rectSprite.setPosition([200,100]);
-// rectSprite.setBodyType(Box2D.Dynamics.b2Body.b2_staticBody);
-rectSprite.setBodyType(Box2D.Dynamics.b2Body.b2_dynamicBody);
+let arrowList= [];
 
-rectSprite.setBodyShape(new Box2D.Collision.Shapes.b2PolygonShape());
+for(let i =0;i<10;i++){
+    let rectSprite = new BPhysicsSprite(150,25);
 
-// rectSprite.setRotate(1);
-let brotate = new BRotate(0.1);
+    rectSprite.draw=function(conntact,context){
+        this.setWidth(explorer.IMG['arrow'].width);
+        this.setHeight( explorer.IMG['arrow'].height);
+        BPaint.from(context).drawImage(explorer.IMG['arrow'],this.x(),this.y(),this.width,this.height);
+    };
 
-// rectSprite.runAction(brotate);
+    rectSprite.setPosition([0,0]);
+    rectSprite.setBodyType(Box2D.Dynamics.b2Body.b2_staticBody);
+    rectSprite.setBodyShape(new Box2D.Collision.Shapes.b2PolygonShape());
 
-scene.addChild(rectSprite);
+    scene.addChild(rectSprite);
 
-let rectSprite1 = new BSprite(100,100);
-rectSprite1.setPosition([100,100]);
+    arrowList.push(rectSprite);
 
-scene.addChild(rectSprite1);
+}
+// rectSprite.setScale(0.5,0.5);
+let isS = false;
+let v = 1;
+scene.addEventListener('mousemove',function (e) {
+    if(!isS){
 
-// rectSprite1.addEventListener('keydown',function () {
-//     console.log('按键事件');
-// });
-//
-// rectSprite1.addEventListener('mousedown',function () {
-//     console.log('鼠标按键事件');
-// });
-//
-// rectSprite1.addEventListener('mouseup',function () {
-//     console.log('鼠标按起事件');
-// });
-// rectSprite1.addEventListener('dblclick',function () {
-//     console.log('双击事件');
-// });
-//
-rectSprite1.addEventListener('mousemove',function () {
-    console.log('鼠标移动事件');
-});
-//
-rectSprite1.addEventListener('mouseout',function () {
-    console.log('鼠标移除事件');
-});
-//
-rectSprite1.addEventListener('mouseover',function () {
-    console.log('鼠标移ru事件');
-});
-//
-// rectSprite1.addEventListener('foucs',function () {
-//     console.log('获取焦点');
-// });
-// rectSprite1.addEventListener('blur',function () {
-//     console.log('失去焦点');
-// });
-//
-rectSprite.addEventListener('foucs',function () {
-    console.log('圆形获取了焦点');
-});
-//
-rectSprite.addEventListener('blur',function () {
-    console.log('圆形失去了焦点');
+        arrowList.forEach(function (val) {
+            let p1 = [val.x(),val.y()];
+            let p2 = [e.offsetX,e.offsetY];
+            let b1 = p2[0] - p1[0];
+            let b2 = p2[1] - p1[1];
+            let b3 = Math.sqrt(b1*b1+b2*b2);
+
+            let r = 2*Math.PI+Math.asin(b2/b3);
+
+            v = b2/b1;
+            val.setRotate(r);
+        })
+
+    }
+
 });
 
-// rectSprite.addEventListener('mousemove',function () {
-//     console.log('鼠标移动事件');
-// });
+scene.addEventListener('mousedown',function (e) {
+    if(arrowList.length > 0){
+        let arrowObj = arrowList.shift();
+        arrowObj.setBodyType(Box2D.Dynamics.b2Body.b2_dynamicBody);
+        arrowObj.applyImpulse([50,50*v]);
+    }
+});
 
 director.run();
 

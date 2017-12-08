@@ -86,7 +86,7 @@ class BPaint {
     //在给定的矩形内清除指定的像素
     clearRect(x,y,w,h){
         return this.context.clearRect(x,y,w,h);
-    };
+    }
     //-----------------------------笔触设置--------------------------------------------
     //设置或返回线条的结束端点样式
     lineCap(val){
@@ -144,7 +144,7 @@ class BPaint {
     };
     //---------------------------绘制图片------------------------------------------------
     drawImage(elem,x,y,w,h){
-        this.context.drawImage(elem,x,y,w,h);
+        this.context.drawImage(elem,x-w/2,y-h/2,w,h);
     };
     drawImageCut(elem,sx,sy,swidth,sheight,x,y,width,height){
         this.context.drawImage(elem,sx,sy,swidth,sheight,x,y,width,height);

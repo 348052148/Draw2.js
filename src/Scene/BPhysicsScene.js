@@ -1,5 +1,6 @@
 import BNode from '../Node/BNode.js'
 import Box2D from 'box2dweb'
+import BPaint from '../Base/BPaint.js'
 class BPhysicsScene extends BNode{
 
     constructor(vector=[0,9.8],doSleep=false){
@@ -8,12 +9,22 @@ class BPhysicsScene extends BNode{
 
         //todo 设置调试模式
         this.debugDraw = new Box2D.Dynamics.b2DebugDraw();
+        this.isdebug = true;
+    }
+
+    setDebug(flag){
+        this.isdebug = flag;
+        if(this.isdebug)
         this.b2World.SetDebugDraw(this.debugDraw);
     }
 
-    draw(contact){
+    draw(contact,context){
 
-        this.setdebugDraw(contact.context);
+        if(this.isdebug){
+            this.setdebugDraw(contact.context);
+        }else{
+            BPaint.from(contact.context).clearRect(0,0,this.width,this.height);
+        }
 
         this.b2World.Step(
             1 / 60   //frame-rate

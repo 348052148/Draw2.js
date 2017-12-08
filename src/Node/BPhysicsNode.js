@@ -8,8 +8,8 @@ class BPhysicsNode extends BNode{
         //材质
         this.fixDef = new Box2D.Dynamics.b2FixtureDef;
 
-
-        console.log('width'+this.width);
+        //异步执行队列
+        this.cmdQueue = [];
 
         this.bodyDef = new Box2D.Dynamics.b2BodyDef;
 
@@ -63,8 +63,48 @@ class BPhysicsNode extends BNode{
         }
     }
 
+    applyForce(vector){
+        this.cmdQueue.push(
+            ()=> {
+                this.b2Body.ApplyForce(new Box2D.Common.Math.b2Vec2(vector[0],vector[1]),this.b2Body.GetWorldCenter());
+            }
+        );
+    }
+
+    applyImpulse(vector){
+        this.cmdQueue.push(
+            ()=> {
+                this.b2Body.ApplyImpulse(new Box2D.Common.Math.b2Vec2(vector[0], vector[1]), this.b2Body.GetWorldCenter());
+            }
+        );
+    }
+
+    applyTorque(torque){
+        this.cmdQueue.push(
+            ()=> {
+                this.b2Body.ApplyTorque(torque);
+            }
+        );
+    }
+
+    //直接设置刚体的速度 会覆盖掉原有速度
+    setLinearVelocity(vector){
+        this.cmdQueue.push(
+            ()=> {
+                this.b2Body.setLinearVelocity(new Box2D.Common.Math.b2Vec2(vector[0], vector[1]));
+            }
+        );
+    }
+
+
     setBodyType(type){
         this.bodyDef.type = type;
+        this.cmdQueue.push(
+            ()=> {
+                this.b2Body.SetType(type);
+            }
+        );
+
     }
 
     setBodyShape(shape){
@@ -77,11 +117,30 @@ class BPhysicsNode extends BNode{
         this._createBody();
     }
 
+    lastDraw(contact){
+        if(this.cmdQueue.length > 0){
+            let cmd = this.cmdQueue.shift();
+            cmd();
+        }
+    }
+
     setPosition(pos){
         this._setBox2DPos(pos[0],pos[1]);
         this.position.setPosition(pos);
         this._setCospos();
         // this._setWorldPos();
+    }
+
+    setWidth(width){
+        this.width = width;
+        this._setCospos();
+        this._setPixel();
+    }
+
+    setHeight(height){
+        this.height = height;
+        this._setCospos();
+        this._setPixel();
     }
 
     //----Position--
@@ -122,8 +181,6 @@ class BPhysicsNode extends BNode{
         this.width = this.width*this.scaleX;
         this.height = this.height*this.scaleY;
         this._setCospos();
-        // this._setWorldPos();
-
         this._setPixel();
 
     }
