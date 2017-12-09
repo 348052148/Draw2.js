@@ -54,6 +54,8 @@ class BNode extends BContainer{
                 continue;
             }
 
+            let context = (this.nodeList[i].node.nodeType == 0)?contact.context.static:contact.context.dynamic;
+
             //如果是活跃节点
             if(this.nodeList[i].node.isActive){
                 context.save();
@@ -92,7 +94,7 @@ class BNode extends BContainer{
     }
 
     lastDraw(contact){
-        // this.isActive = false;
+
     }
 
     //宽度
@@ -120,7 +122,7 @@ class BNode extends BContainer{
     setPosition(pos){
         this.position.setPosition(pos);
         this._setCospos();
-        this.setActive(true);
+        // this.setActive(true);
         // this._setWorldPos();
     }
 

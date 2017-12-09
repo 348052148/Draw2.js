@@ -43,9 +43,37 @@ class BApplication {
         return this.backCanvas;
     }
 
+
+    createDynamicCanvas(x,y,borderStyle){
+        this.dynamicCanvas=document.createElement("canvas");
+        this.dynamicCanvas.width= this.canvas.width;
+        this.dynamicCanvas.height= this.canvas.height;
+        this.BdynamicContext = this.dynamicCanvas.getContext("2d");
+        this.dynamicCanvas.style.left=x+'px';
+        this.dynamicCanvas.style.top=y+'px';
+        this.dynamicCanvas.style.position = 'absolute';
+        this.dynamicCanvas.style.border=borderStyle;
+        return this.dynamicCanvas;
+    }
+
+    createStaticCanvas(x,y,borderStyle){
+        this.staticCanvas=document.createElement("canvas");
+        this.staticCanvas.width= this.canvas.width;
+        this.staticCanvas.height= this.canvas.height;
+        this.BstaticContext = this.staticCanvas.getContext("2d");
+        this.staticCanvas.style.left=x+'px';
+        this.staticCanvas.style.top=y+'px';
+        this.staticCanvas.style.position = 'absolute';
+        this.staticCanvas.style.border=borderStyle;
+        return this.staticCanvas;
+    }
+
+
     getContext(){
         return {
             'font':this.BContext,
+            'static':this.BstaticContext,
+            'dynamic':this.BdynamicContext,
             'back':this.BbackContext
         }
     }
@@ -64,13 +92,16 @@ class BApplication {
 
         if(fps == undefined || fps == null) fps=1000/60;
         this.fps=fps;
-        ele.appendChild(this.canvas);
+
         this.canvasObj = this.canvas;
 
-        this.init();
-        this.initEvent();
 
         ele.appendChild(this.createBackCanvas(x,y,borderStyle));
+        ele.appendChild(this.createStaticCanvas(x,y,borderStyle));
+        ele.appendChild(this.createDynamicCanvas(x,y,borderStyle));
+        ele.appendChild(this.canvas);
+        this.init();
+        this.initEvent();
 
     }
     end(){}

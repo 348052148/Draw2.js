@@ -45,6 +45,8 @@ explorer.loadImages({
     arrow:arrow
 },function (loadedImages,numImages) { //加载中回调
 
+},function () {
+    
 });
 
 let scene = new BScene();
@@ -58,6 +60,8 @@ let sprite = new BSprite(100,100);
 scene.addChild(sprite);
 
 sprite.setPosition([200,200]);
+
+
 
 
 director.run();

@@ -102,9 +102,9 @@ function BFrame(time) {
     //todo 状态保存
     BFrame.application.BbackContext.save();
     //todo 作为顶级的场景绘制
-    BFrame.scene.draw({context:BFrame.application.getContext,pWidth:BFrame.application.width,pHeight:BFrame.application.height},BFrame.application.BbackContext);
+    BFrame.scene.draw({context:BFrame.application.getContext(),pWidth:BFrame.application.width,pHeight:BFrame.application.height},BFrame.application.BbackContext);
     //todo 进行子集
-    BFrame.scene.topDraw({context:BFrame.application.getContext,pWidth:BFrame.application.width,pHeight:BFrame.application.height},BFrame.application.BbackContext);
+    BFrame.scene.topDraw({context:BFrame.application.getContext(),pWidth:BFrame.application.width,pHeight:BFrame.application.height},BFrame.application.BbackContext);
     //todo 状态恢复
     BFrame.application.BbackContext.restore();
 

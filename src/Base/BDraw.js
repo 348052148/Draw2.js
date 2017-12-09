@@ -10,6 +10,7 @@ class BDraw extends BClone{
 
         this.acObj= new Array();
         this.isActionActive  = true;
+        this.nodeType = 0; // 0 静态节点 1 动态节点
     }
 
     beferDraw(){
@@ -48,15 +49,20 @@ class BDraw extends BClone{
             this.acObj[action.UUID] = action;
         }
         action.isActive = true;
+        this.nodeType = 1;
 
     };
 
     stopAction (action) {
         action.isActive = false;
+        if(this.acObj.length==0){
+            this.nodeType = 0;
+        }
     };
 
     removeALLAction(){
         this.acObj = [];
+        this.nodeType = 0;
     };
 
     //移除
