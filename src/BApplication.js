@@ -31,16 +31,37 @@ class BApplication {
         });
     }
 
+    createBackCanvas(x,y,borderStyle){
+        this.backCanvas=document.createElement("canvas");
+        this.backCanvas.width= this.canvas.width;
+        this.backCanvas.height= this.canvas.height;
+        this.BbackContext = this.backCanvas.getContext("2d");
+        this.backCanvas.style.left=x+'px';
+        this.backCanvas.style.top=y+'px';
+        this.backCanvas.style.position = 'absolute';
+        this.backCanvas.style.border=borderStyle;
+        return this.backCanvas;
+    }
+
+    getContext(){
+        return {
+            'font':this.BContext,
+            'back':this.BbackContext
+        }
+    }
+
     createWindow(x,y,w,h,borderStyle,ele,fps){
         this.canvas=document.createElement("canvas");
         this.canvas.style.left=x+'px';
         this.canvas.style.top=y+'px';
         this.canvas.width=w;
         this.canvas.height=h;
-        this.width=w;
-        this.height=h;
+        this.canvas.style.position = 'absolute';
         this.canvas.style.border=borderStyle;
         this.canvas.id=this.canvasId;
+        this.width=w;
+        this.height=h;
+
         if(fps == undefined || fps == null) fps=1000/60;
         this.fps=fps;
         ele.appendChild(this.canvas);
@@ -48,6 +69,9 @@ class BApplication {
 
         this.init();
         this.initEvent();
+
+        ele.appendChild(this.createBackCanvas(x,y,borderStyle));
+
     }
     end(){}
     toDataURL() {

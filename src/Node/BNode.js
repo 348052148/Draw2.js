@@ -3,6 +3,7 @@ import BContainer from '../Base/BContainer.js'
 import BActions from '../Base/BActions.js'
 import BPoint from '../Base/BPoint.js'
 import BEvent from '../Events/BEvent.js'
+import BPaint from "../Base/BPaint";
 class BNode extends BContainer{
 
     constructor(){
@@ -46,7 +47,7 @@ class BNode extends BContainer{
         return this.event.foucs;
     }
     //todo 处理层级绘画
-    topDraw(contact){
+    topDraw(contact,context){
         for(var i=0;i<this.nodeList.length;i++){
 
             if(this.nodeList[i] == null || this.nodeList[i] == undefined){
@@ -55,27 +56,28 @@ class BNode extends BContainer{
 
             //如果是活跃节点
             if(this.nodeList[i].node.isActive){
-                contact.context.save();
+                context.save();
 
                 //处理scale
 
                 // new BActions(context).scale(this.nodeList[i].node.scaleX,this.nodeList[i].node.scaleY);
-                new BActions(contact.context).rotate(this.nodeList[i].node.getAngle(),this.nodeList[i].node.corePos);
+                new BActions(context).rotate(this.nodeList[i].node.getAngle(),this.nodeList[i].node.corePos);
 
                 contact.pWidth = this.width;
                 contact.pHeight = this.height;
                 //todo 上下文对象
-                this.nodeList[i].node.context = contact.context;
-                this.nodeList[i].node.beferDraw(contact);
-                this.nodeList[i].node.draw(contact,contact.context);
-                this.nodeList[i].node.lastDraw(contact);
+                this.nodeList[i].node.contact = contact;
+                this.nodeList[i].node.context = context;
+                this.nodeList[i].node.beferDraw(contact,context);
+                this.nodeList[i].node.draw(contact,context);
+                this.nodeList[i].node.lastDraw(contact,context);
 
-                contact.context.restore();
+                context.restore();
             }
 
             //执行自己节点拥有的动作
             if(this.nodeList[i].node.actions!=undefined && this.nodeList[i].node.actions!=null){
-                this.nodeList[i].node.actions(contact);
+                this.nodeList[i].node.actions(contact,context);
             }
 
             //判断是否为非point属性 设置基础属性
@@ -83,6 +85,14 @@ class BNode extends BContainer{
                 this.nodeList[i].node.setBasePosition({x:this.x(),y:this.y()});
             }
         }
+    }
+
+    beferDraw(contact){
+        // BPaint.from(contact.context).clearRect(this.position._old_x,this.position._old_y,this.width,this.height);
+    }
+
+    lastDraw(contact){
+        // this.isActive = false;
     }
 
     //宽度
@@ -110,6 +120,7 @@ class BNode extends BContainer{
     setPosition(pos){
         this.position.setPosition(pos);
         this._setCospos();
+        this.setActive(true);
         // this._setWorldPos();
     }
 

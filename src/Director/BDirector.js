@@ -100,13 +100,13 @@ function BFrame(time) {
     // BFrame.application.fps = 1000/(time-BFrame.preTime);
     BFrame.preTime = time;
     //todo 状态保存
-    BFrame.application.BContext.save();
+    BFrame.application.BbackContext.save();
     //todo 作为顶级的场景绘制
-    BFrame.scene.draw({context:BFrame.application.BContext,pWidth:BFrame.application.width,pHeight:BFrame.application.height},BFrame.application.BContext);
+    BFrame.scene.draw({context:BFrame.application.getContext,pWidth:BFrame.application.width,pHeight:BFrame.application.height},BFrame.application.BbackContext);
     //todo 进行子集
-    BFrame.scene.topDraw({context:BFrame.application.BContext,pWidth:BFrame.application.width,pHeight:BFrame.application.height});
+    BFrame.scene.topDraw({context:BFrame.application.getContext,pWidth:BFrame.application.width,pHeight:BFrame.application.height},BFrame.application.BbackContext);
     //todo 状态恢复
-    BFrame.application.BContext.restore();
+    BFrame.application.BbackContext.restore();
 
     BFrame.frameID = window.requestAnimationFrame(BFrame);
 }

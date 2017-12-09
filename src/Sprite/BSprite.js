@@ -8,9 +8,9 @@ class BSprite extends BNode {
         this.height = h;
     }
 
-    draw(contact) {
+    draw(contact,context) {
         // console.log('SPRITE DRAW');
-        let paint = BPaint.from(contact.context);
+        let paint = BPaint.from(context);
         paint.setColor('#000');
         paint.strokeRect(this.x(), this.y(), this.width, this.height);
 

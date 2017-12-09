@@ -24,14 +24,18 @@ class BDraw extends BClone{
 
     }
 
+    setActive(flag){
+        this.isActive = flag;
+    }
 
-    actions(contact){
+
+    actions(contact,context){
         if(!this.isActionActive) return false;
         if(this.acObj!=undefined && this.acObj!=null){
             for(let ac in this.acObj){
                 let acobj = this.acObj[ac];
                 if(acobj.isActive){
-                    acobj.executed(this,contact.context);
+                    acobj.executed(this,context);
                 }
             }
         }

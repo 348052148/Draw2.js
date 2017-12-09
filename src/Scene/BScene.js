@@ -7,8 +7,8 @@ class BScene extends BNode{
 
     }
 
-    draw(contact){
-        // BPaint.from(contact.context).clearRect(0,0,this.width,this.height);
+    draw(contact,context){
+        BPaint.from(context).clearRect(0,0,this.width,this.height);
 
     };
 
