@@ -70,9 +70,9 @@ class BNode extends BContainer{
                 //todo 上下文对象
                 this.nodeList[i].node.contact = contact;
                 this.nodeList[i].node.context = context;
-                this.nodeList[i].node.beferDraw(contact,context);
-                this.nodeList[i].node.draw(contact,context);
-                this.nodeList[i].node.lastDraw(contact,context);
+                this.nodeList[i].node.beferDraw(contact,context,BPaint.from(context));
+                this.nodeList[i].node.draw(contact,context,BPaint.from(context));
+                this.nodeList[i].node.lastDraw(contact,context,BPaint.from(context));
 
                 context.restore();
             }
