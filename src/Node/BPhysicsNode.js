@@ -189,6 +189,7 @@ class BPhysicsNode extends BNode{
         this.angle = angle;
         this.bodyDef.angle = angle;
         if(this.b2Body != null){
+            console.log('231');
             this.b2Body.SetAngle(angle);
         }
     }

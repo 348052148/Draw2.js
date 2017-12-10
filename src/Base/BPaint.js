@@ -1,7 +1,8 @@
-
-class BPaint {
+import BObject from './BObject.js'
+class BPaint  extends BObject{
 
     constructor(context){
+        super();
         this.context = context;
     }
 

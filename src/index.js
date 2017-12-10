@@ -18,6 +18,7 @@ import BFilterPiex from "./Actions/BFilterPiex.js";
 import forward from './Assets/image/forward.png'
 import filterJpg from './Assets/image/filter.jpg'
 import arrow from './Assets/image/arrow.png';
+import BLineChart from './Chat/BLineChart.js'
 
 import Box2D from 'box2dweb'
 
@@ -35,42 +36,38 @@ var  b2Vec2 = Box2D.Common.Math.b2Vec2,
 
 
 let app = new BApplication();
-app.createWindow(0,0,800,800,'1px solid #000',document.body,60);
+app.createWindow(0,0,1800,800,'1px solid #000',document.body,60);
 
 let director = new BDirector(app);
 
-
-let explorer = new BExplorer(director);
-explorer.loadImages({
-    arrow:arrow
-},function (loadedImages,numImages) { //加载中回调
-
-},function () {
-    
-});
-
 let scene = new BScene();
-scene.width = 800;
-scene.height = 800;
+scene.width=1800;
+scene.height=800;
 
 director.addScene(scene);
 
-let sprite = new BSprite(100,100);
+let data = [100,300,400,200,500,1000,450,300,350];
 
-scene.addChild(sprite);
+let meta = ['2017-01-12','2017-01-13','2017-01-14','2017-01-15','2017-01-16','2017-01-17','2017-01-17','2017-01-17','2017-01-17'];
 
-sprite.setPosition([200,200]);
+let lineChart = new BLineChart(data,meta);
 
+lineChart.setPosition([100,100]);
 
+lineChart.init();
+
+scene.addChild(lineChart);
+
+lineChart.addEventListener('mousedown',function () {
+    alert(1);
+    let data = [100,300,400,200,500,1000,450,300,750];
+    lineChart.setData(data);
+});
 
 
 director.run();
 
-setInterval(function () {
-    sprite.setPosition([sprite.x()+1,sprite.y()+1]);
-    // app.BContext.drawImage(app.backCanvas,0,0);
 
-},1000/60);
 
 
 

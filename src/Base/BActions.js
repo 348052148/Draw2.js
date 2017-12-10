@@ -1,6 +1,7 @@
-
-class BActions{
+import BObject from './BObject.js'
+class BActions extends BObject{
     constructor(context){
+        super();
         this.context = context;
     }
     scale(x,y){

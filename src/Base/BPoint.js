@@ -1,7 +1,8 @@
-
-class BPoint{
+import BObject from './BObject.js'
+class BPoint extends BObject{
 
     constructor(){
+        super();
         //坐标
         this._x=0;
         this._y=0;

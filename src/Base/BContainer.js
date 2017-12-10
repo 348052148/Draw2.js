@@ -36,7 +36,10 @@ class BContainer extends BDraw {
             }
 
         }
-    };
+    }
+    removeAllChild(){
+        this.nodeList = [];
+    }
 
     setZindex(val){
         this.getParentNode().nodeList[val] = {uuid:this.UUID,node:this};

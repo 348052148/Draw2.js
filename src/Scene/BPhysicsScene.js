@@ -21,10 +21,10 @@ class BPhysicsScene extends BNode{
     draw(contact,context){
 
         if(this.isdebug){
-            this.setdebugDraw(contact.context);
+            this.setdebugDraw(context);
         }else{
-            BPaint.from(contact.context).clearRect(0,0,this.width,this.height);
-        }
+            BPaint.from(context).clearRect(0,0,this.width,this.height);
+        }BPaint.from(context).clearRect(0,0,this.width,this.height);
 
         this.b2World.Step(
             1 / 60   //frame-rate

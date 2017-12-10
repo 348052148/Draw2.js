@@ -54,7 +54,7 @@ class BNode extends BContainer{
                 continue;
             }
 
-            let context = (this.nodeList[i].node.nodeType == 0)?contact.context.static:contact.context.dynamic;
+            // let context = (this.nodeList[i].node.nodeType == 0)?contact.context.static:contact.context.dynamic;
 
             //如果是活跃节点
             if(this.nodeList[i].node.isActive){

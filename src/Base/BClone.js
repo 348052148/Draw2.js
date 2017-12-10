@@ -1,4 +1,8 @@
-class BClone{
+import BObject from './BObject.js'
+class BClone extends BObject{
+    constructor(){
+        super();
+    }
     clone(){
         let o, obj;
         obj=this;
