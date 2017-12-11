@@ -64,7 +64,7 @@ class BAxes extends BNode{
             context.moveTo(this.core[0]-5, this.core[1]-i*this.verticalInterval);
             context.lineTo(this.core[0]+5, this.core[1]-i*this.verticalInterval);
             context.lineWidth = 1;
-            context.font="14px Arial";
+            context.font="14px 宋体";
             let v = context.measureText(parseInt(this.startVal+(this.inter*(i-1)))).width+10;
             context.strokeText(parseInt(this.startVal+(this.inter*(i-1))),this.core[0]-v ,this.core[1]-i*this.verticalInterval+6);
         }
@@ -72,7 +72,7 @@ class BAxes extends BNode{
         for(let i=1;i<this.scaleNumY;i++){
             context.moveTo(this.core[0]+i*this.horizontalInterval, this.core[1]-5);
             context.lineTo(this.core[0]+i*this.horizontalInterval, this.core[1]+5);
-            context.font="14px Arial";
+            context.font="14px 宋体";
 
             context.strokeText(this.meta[i-1],this.core[0]+i*this.horizontalInterval-context.measureText(this.meta[i-1]).width/2, this.core[1]+30);
         }

@@ -11,14 +11,21 @@ export class BElement extends BNode{
         super();
         this.data = null; //记录节点数据
         this.width = width;
+        this.height = this.width;
 
         this.oldElemet = null;
+
+        this.isHover = false;
     }
 
     draw(contact,context){
         context.beginPath();
         context.arc(this.x(),this.y(),this.width/2,0,2*Math.PI);
-        context.stroke();
+        if(this.isHover){
+            context.fill();
+        }else{
+            context.stroke();
+        }
         if(this.oldElemet !=null){
             context.beginPath();
             context.moveTo(this.oldElemet.x(), this.oldElemet.y());
@@ -34,7 +41,7 @@ export class BElement extends BNode{
 }
 
 class BLineChart extends BNode{
-
+    // data meta width=长度 height=宽度
     constructor(data,meta,width=1800,height=800){
         super();
         this.data = data;
@@ -87,6 +94,15 @@ class BLineChart extends BNode{
             ]);
 
             this.addChild(posElem);
+
+            posElem.addEventListener('mouseover',function (e) {
+                posElem.isHover = true;
+            });
+
+            posElem.addEventListener('mouseout',function (e) {
+                posElem.isHover = false;
+            });
+
 
             if(i==0){
                 oldElem = posElem;
