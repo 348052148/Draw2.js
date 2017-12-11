@@ -75,16 +75,20 @@ class BPaint  extends BObject{
     //----------------------阴影处理----------------------------
 
     //shadowOffsetX 和 shadowOffsetY 用来设定阴影在 X 和 Y 轴的延伸距离，它们是不受变换矩阵所影响的。
-    //负值表示阴影会往上或左延伸，正值则表示会往下或右延伸，它们默认都为 0。
-    shadowOffsetX(val){
-        this.shadowOffsetX = val;
-    }
-    //shadowBlur 用于设定阴影的模糊程度，其数值并不跟像素数量挂钩，也不受变换矩阵的影响，默认为 0。
-    shadowOffsetY(val){
-        this.shadowOffsetY = val;
+
+    setShadow(shadowOffsetX=0,shadowOffsetY=0,shadowBlur=0,shadowColor=''){
+        this.context.shadowOffsetX = shadowOffsetX;
+        this.context.shadowOffsetY = shadowOffsetY;
+        this.context.shadowBlur = shadowBlur;
+        this.context.shadowColor = shadowColor;
     }
 
+
     //---------------------路径绘图----------------------------
+    // 设置路径的遮罩策略
+    globalCompositeOperation(type){
+        this.globalCompositeOperation = type;
+    }
     stroke(){
         return this.context.stroke();
     };
