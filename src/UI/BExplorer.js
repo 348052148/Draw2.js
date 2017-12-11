@@ -30,6 +30,7 @@ class BExplorer{
             };
 
             this.IMG[src].src = sources[src];
+            // 使用此选项进行跨域操作
             // this.IMG[src].crossOrigin = "Anonymous";
         }
     }
