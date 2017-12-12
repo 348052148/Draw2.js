@@ -197,12 +197,14 @@ class BPaint  extends BObject{
         return this.context.measureText(text);
     };
     //---------------------------绘制图片------------------------------------------------
-    drawImage(elem,x,y,w=w,h=w){
-        if(w==null){
-            return this.context.drawImage(elem,x-elem.width,y-elem.height);
+
+    drawImage(elem,x,y,w=0,h=0){
+        if(w == 0){
+            return this.drawImage(elem,x,y);
         }
-        return this.context.drawImage(elem,x-w/2,y-h/2,w,h);
+        this.context.drawImage(elem,x-w/2,y-h/2,w,h);
     };
+    
     drawImageCut(elem,sx,sy,swidth,sheight,x,y,width,height){
         return this.context.drawImage(elem,sx,sy,swidth,sheight,x,y,width,height);
     };
