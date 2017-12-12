@@ -18,7 +18,6 @@ import BFilterPiex from "./Actions/BFilterPiex.js";
 import forward from './Assets/image/forward.png'
 import filterJpg from './Assets/image/filter.jpg'
 import arrow from './Assets/image/arrow.png';
-import BLineChart from './Chat/BLineChart.js'
 
 import Box2D from 'box2dweb'
 

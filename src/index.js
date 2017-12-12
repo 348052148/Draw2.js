@@ -19,6 +19,8 @@ import forward from './Assets/image/forward.png'
 import filterJpg from './Assets/image/filter.jpg'
 import arrow from './Assets/image/arrow.png';
 import BLineChart from './Chat/BLineChart.js'
+import BPath from './Drafting/BPath.js'
+import BPoint from './Base/BPoint.js'
 
 import Box2D from 'box2dweb'
 
@@ -56,14 +58,28 @@ lineChart.setPosition([100,100]);
 
 lineChart.init();
 
-scene.addChild(lineChart);
+// scene.addChild(lineChart);
 
 lineChart.addEventListener('mousedown',function () {
-    alert(1);
     let data = [100,300,400,200,500,1000,450,300,750];
     lineChart.setData(data);
 });
 
+let pathTest = new BSprite(100,100);
+
+pathTest.draw = function (c,context) {
+    let path = new BPath();
+    path.polygon([
+        new BPoint([0,0]),
+        new BPoint([100,100]),
+        new BPoint([300,200]),
+        new BPoint([200,50])
+    ]);
+    path.analysis(context);
+    path.fill();
+};
+
+scene.addChild(pathTest);
 
 director.run();
 

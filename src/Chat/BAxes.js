@@ -3,6 +3,7 @@
  */
 import BNode from '../Node/BNode.js'
 import BPoint from '../Base/BPoint.js'
+import BPaint from "../Base/BPaint";
 
 
 class BAxes extends BNode{
@@ -38,59 +39,59 @@ class BAxes extends BNode{
     }
 
     draw(contact,context){
+        let Paint = BPaint.from(context);
+        Paint.save();
+        Paint.lineWidth(4);
+        Paint.beginPath();
+        Paint.moveTo(this.core[0], this.core[1]);
+        Paint.lineTo(this.x()+this.horizontal, this.vertical);
 
-        context.save();
-        context.lineWidth = 4;
-        context.beginPath();
-        context.moveTo(this.core[0], this.core[1]);
-        context.lineTo(this.x()+this.horizontal, this.vertical);
-
-        context.moveTo(this.core[0], this.core[1]);
-        context.lineTo(this.x(), this.y());
+        Paint.moveTo(this.core[0], this.core[1]);
+        Paint.lineTo(this.x(), this.y());
         this.drawArrow(context);
-        context.stroke();
-        context.restore();
+        Paint.stroke();
+        Paint.restore();
 
 
         this.drawScale(context);
 
-        context.stroke();
+        Paint.stroke();
     }
 
 
     drawScale(context){
-        context.lineWidth = 1;
+        let Paint = BPaint.from(context);
+        Paint.lineWidth(1);
         for(let i=1;i<this.scaleNumX;i++){
-            context.moveTo(this.core[0]-5, this.core[1]-i*this.verticalInterval);
-            context.lineTo(this.core[0]+5, this.core[1]-i*this.verticalInterval);
-            context.lineWidth = 1;
-            context.font="14px 宋体";
-            let v = context.measureText(parseInt(this.startVal+(this.inter*(i-1)))).width+10;
-            context.strokeText(parseInt(this.startVal+(this.inter*(i-1))),this.core[0]-v ,this.core[1]-i*this.verticalInterval+6);
+            Paint.moveTo(this.core[0]-5, this.core[1]-i*this.verticalInterval);
+            Paint.lineTo(this.core[0]+5, this.core[1]-i*this.verticalInterval);
+            Paint.lineWidth (1);
+            Paint.font("14px 宋体");
+            let v = Paint.measureText(parseInt(this.startVal+(this.inter*(i-1)))).width+10;
+            Paint.strokeText(parseInt(this.startVal+(this.inter*(i-1))),this.core[0]-v ,this.core[1]-i*this.verticalInterval+6);
         }
 
         for(let i=1;i<this.scaleNumY;i++){
-            context.moveTo(this.core[0]+i*this.horizontalInterval, this.core[1]-5);
-            context.lineTo(this.core[0]+i*this.horizontalInterval, this.core[1]+5);
-            context.font="14px 宋体";
-
-            context.strokeText(this.meta[i-1],this.core[0]+i*this.horizontalInterval-context.measureText(this.meta[i-1]).width/2, this.core[1]+30);
+            Paint.moveTo(this.core[0]+i*this.horizontalInterval, this.core[1]-5);
+            Paint.lineTo(this.core[0]+i*this.horizontalInterval, this.core[1]+5);
+            Paint.font("14px 宋体");
+            Paint.strokeText(this.meta[i-1],this.core[0]+i*this.horizontalInterval-context.measureText(this.meta[i-1]).width/2, this.core[1]+30);
         }
     }
 
     drawArrow(context){
+        let Paint = BPaint.from(context);
+        Paint.moveTo(this.x(), this.y());
+        Paint.lineTo(this.x()-10, this.y()+20);
 
-        context.moveTo(this.x(), this.y());
-        context.lineTo(this.x()-10, this.y()+20);
+        Paint.moveTo(this.x(), this.y());
+        Paint.lineTo(this.x()+10, this.y()+20);
 
-        context.moveTo(this.x(), this.y());
-        context.lineTo(this.x()+10, this.y()+20);
+        Paint.moveTo(this.x()+this.horizontal, this.vertical);
+        Paint.lineTo(this.x()+this.horizontal-20, this.vertical+10);
 
-        context.moveTo(this.x()+this.horizontal, this.vertical);
-        context.lineTo(this.x()+this.horizontal-20, this.vertical+10);
-
-        context.moveTo(this.x()+this.horizontal, this.vertical);
-        context.lineTo(this.x()+this.horizontal-20, this.vertical-10);
+        Paint.moveTo(this.x()+this.horizontal, this.vertical);
+        Paint.lineTo(this.x()+this.horizontal-20, this.vertical-10);
 
     }
 }

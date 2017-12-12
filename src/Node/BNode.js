@@ -1,10 +1,12 @@
-//融合volume
-import BContainer from '../Base/BContainer.js'
+/**
+ * 绘画节点对象
+ */
 import BActions from '../Base/BActions.js'
 import BPoint from '../Base/BPoint.js'
 import BEvent from '../Events/BEvent.js'
 import BPaint from "../Base/BPaint";
-class BNode extends BContainer{
+import BDraw from '../Base/BDraw.js'
+class BNode extends BDraw{
 
     constructor(){
         super();

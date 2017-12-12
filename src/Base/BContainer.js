@@ -1,12 +1,14 @@
-import BDraw from './BDraw.js'
-import Box2D from 'box2dweb'
-class BContainer extends BDraw {
+/**
+ * 容器对象
+ */
+import BClone from './BClone.js'
+class BContainer extends BClone {
 
     constructor(){
         super();
         this.nodeList=new Array();
         this.parentNode = null;
-        this.z_index = 0;
+        this.z_index = 0; // 当前对象的z_index
     }
 
     addChild(container){
@@ -16,7 +18,17 @@ class BContainer extends BDraw {
 
     };
 
-
+    /**
+     * 获取所有节点对象
+     * @returns {Array}
+     */
+    getNodeList(){
+        let tmpList = [];
+        this.nodeList.forEach(function (value) {
+            tmpList.push(value.node);
+        });
+        return tmpList;
+    }
 
     setParentNode(container) {
         this.parentNode = container;

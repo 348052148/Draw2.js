@@ -1,3 +1,6 @@
+/**
+ * 物理绘画节点
+ */
 import BNode from './BNode.js'
 import BPoint from '../Base/BPoint.js'
 import Box2D from 'box2dweb'

@@ -1,6 +1,6 @@
-//融合之前老的
-import BClone from './BClone.js'
-class BDraw extends BClone{
+// draw 对象 提供动作相关列表和操作
+import BContainer from './BContainer.js'
+class BDraw extends BContainer{
 
     constructor(){
         super();

@@ -1,4 +1,6 @@
-
+/**
+ * 工具类。提供一些静态函数用于处理计算
+ */
 class BUtils {
 
     static uuid(){

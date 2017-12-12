@@ -1,3 +1,6 @@
+/**
+ * 克隆对象 继承此类可提供 clone 操作
+ */
 import BObject from './BObject.js'
 class BClone extends BObject{
     constructor(){

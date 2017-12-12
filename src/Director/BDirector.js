@@ -12,7 +12,6 @@ class BDirector {
 
     addScene(scene){
         this.sceneList.push({scene:scene,sceneId:BUtils.uuid()});
-        console.log(this.sceneList);
         if(this.runScene==null){
             this.runScene=this.sceneList[0].scene;
         }

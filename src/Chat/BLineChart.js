@@ -4,6 +4,7 @@
 
 import BNode from '../Node/BNode.js'
 import BAxes from './BAxes.js'
+import BPaint from '../Base/BPaint.js'
 
 export class BElement extends BNode{
 
@@ -19,18 +20,19 @@ export class BElement extends BNode{
     }
 
     draw(contact,context){
-        context.beginPath();
-        context.arc(this.x(),this.y(),this.width/2,0,2*Math.PI);
+        let Paint = BPaint.from(context);
+        Paint.beginPath();
+        Paint.arc(this.x(),this.y(),this.width/2,0,2*Math.PI);
         if(this.isHover){
-            context.fill();
+            Paint.fill();
         }else{
-            context.stroke();
+            Paint.stroke();
         }
         if(this.oldElemet !=null){
-            context.beginPath();
-            context.moveTo(this.oldElemet.x(), this.oldElemet.y());
-            context.lineTo(this.x(), this.y());
-            context.stroke();
+            Paint.beginPath();
+            Paint.moveTo(this.oldElemet.x(), this.oldElemet.y());
+            Paint.lineTo(this.x(), this.y());
+            Paint.stroke();
         }
     }
 
@@ -58,18 +60,28 @@ class BLineChart extends BNode{
         this.axes = new BAxes(interval,7,this.data.length,height-100,width-120,meta);
 
         this.elemList = [];
+
+        this.addEventListener('mousemove',(e)=> {
+            let list = this.getNodeList();
+            list.forEach((v)=> {
+                v.isHover = false;
+               if((v.x() - this.axes.horizontalInterval/2) <= e.offsetX && e.offsetX <= (v.x() + this.axes.horizontalInterval/2)){
+                   v.isHover = true;
+               }
+            });
+        });
+
     }
 
 
     init(){
         this.addChild(this.axes);
-        console.log(this.nodeList);
         this.drawElement();
+        this.setPosition([this.width/2,this.height/2]);
     }
 
     draw(contact,context){
         this.topDraw(contact,context);
-
     }
 
     setData(data){
@@ -86,7 +98,7 @@ class BLineChart extends BNode{
         let oldElem = null;
         for(let i=0;i<this.data.length;i++){
 
-            let posElem = new BElement(20);
+            let posElem = new BElement(10);
 
             posElem.setPosition([
                 this.axes.core[0]+this.axes.horizontalInterval*(1+i),

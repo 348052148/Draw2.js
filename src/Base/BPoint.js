@@ -1,24 +1,27 @@
+/**
+ *  坐标点对象
+ */
 import BObject from './BObject.js'
 class BPoint extends BObject{
 
-    constructor(){
+    constructor(pos=[0,0]){
         super();
         //坐标
-        this._x=0;
-        this._y=0;
-        this._old_x=99999;
-        this._old_y=99999;
+        this._x=pos[0];
+        this._y=pos[1];
+        this._old_x=null;
+        this._old_y=null;
     }
 
     //设置基础坐标
     setPosition(pos){
-        if(this._old_x==99999) {
-            this._old_x = pos.x;
+        if(this._old_x==null) {
+            this._old_x = pos[0];
         }else{
             this._old_x= this._x;
         }
-        if(this._old_y==99999){
-            this._old_y= pos.y;
+        if(this._old_y==null){
+            this._old_y= pos[1];
         }else{
             this._old_y= this.posY;
         }

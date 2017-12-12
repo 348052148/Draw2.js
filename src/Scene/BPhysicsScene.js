@@ -1,3 +1,6 @@
+/**
+ *  物理绘画图形
+ */
 import BNode from '../Node/BNode.js'
 import Box2D from 'box2dweb'
 import BPaint from '../Base/BPaint.js'

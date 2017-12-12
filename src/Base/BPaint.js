@@ -1,3 +1,6 @@
+/**
+ * 基础画笔类 其实就是对h5 canvas 原生方法的封装
+ */
 import BObject from './BObject.js'
 class BPaint  extends BObject{
 
@@ -12,6 +15,13 @@ class BPaint  extends BObject{
         return BPaint.instances;
     }
 
+    //-----------------------------状态设置-------------------------------------------
+    save(){
+        this.context.save();
+    }
+    restore(){
+        this.context.restore();
+    }
     //----------------------------样式设置-----------------------------------------
     //墨水设置
     setColor(color) {
@@ -187,11 +197,14 @@ class BPaint  extends BObject{
         return this.context.measureText(text);
     };
     //---------------------------绘制图片------------------------------------------------
-    drawImage(elem,x,y,w,h){
-        this.context.drawImage(elem,x-w/2,y-h/2,w,h);
+    drawImage(elem,x,y,w=w,h=w){
+        if(w==null){
+            return this.context.drawImage(elem,x-elem.width,y-elem.height);
+        }
+        return this.context.drawImage(elem,x-w/2,y-h/2,w,h);
     };
     drawImageCut(elem,sx,sy,swidth,sheight,x,y,width,height){
-        this.context.drawImage(elem,sx,sy,swidth,sheight,x,y,width,height);
+        return this.context.drawImage(elem,sx,sy,swidth,sheight,x,y,width,height);
     };
 
     //----------------------------数据截取--------------------------------------
