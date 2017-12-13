@@ -4,7 +4,9 @@
 import BNode from '../Node/BNode.js'
 import BPoint from '../Base/BPoint.js'
 import BPaint from "../Base/BPaint";
-
+import BPathGroup from "../Drafting/BPath.js"
+import BStrokes from '../Drafting/Style/BStrokes.js'
+import BText from '../Drafting/BText.js'
 
 class BAxes extends BNode{
 
@@ -39,60 +41,47 @@ class BAxes extends BNode{
     }
 
     draw(contact,context){
-        let Paint = BPaint.from(context);
-        Paint.save();
-        Paint.lineWidth(4);
-        Paint.beginPath();
-        Paint.moveTo(this.core[0], this.core[1]);
-        Paint.lineTo(this.x()+this.horizontal, this.vertical);
+        let pathGroup = new BPathGroup();
 
-        Paint.moveTo(this.core[0], this.core[1]);
-        Paint.lineTo(this.x(), this.y());
-        this.drawArrow(context);
-        Paint.stroke();
-        Paint.restore();
+        pathGroup.path()
 
+        .style({'lineWidth':4})
+        // 坐标线
+        .line([this.core[0], this.core[1]],[this.x()+this.horizontal, this.vertical])
+        .line([this.core[0], this.core[1]],[this.x(), this.y()])
+        // 箭头
+        .line([this.x(), this.y()],[this.x()-10, this.y()+20])
+        .line([this.x(), this.y()],[this.x()+10, this.y()+20])
+        // 箭头
+        .line([this.x()+this.horizontal, this.vertical],[this.x()+this.horizontal-20, this.vertical+10])
+        .line([this.x()+this.horizontal, this.vertical],[this.x()+this.horizontal-20, this.vertical-10])
+        .stroke(context);
 
-        this.drawScale(context);
-
-        Paint.stroke();
+        this.drawScale(pathGroup,context);
     }
-
-
-    drawScale(context){
+    
+    drawScale(pathGroup,context){
         let Paint = BPaint.from(context);
-        Paint.lineWidth(1);
+
+        pathGroup.path().style({'lineWidth':1});
+
         for(let i=1;i<this.scaleNumX;i++){
-            Paint.moveTo(this.core[0]-5, this.core[1]-i*this.verticalInterval);
-            Paint.lineTo(this.core[0]+5, this.core[1]-i*this.verticalInterval);
-            Paint.lineWidth (1);
-            Paint.font("14px 宋体");
+
+            pathGroup.line([this.core[0]-5, this.core[1]-i*this.verticalInterval],[this.core[0]+5, this.core[1]-i*this.verticalInterval]);
+            
             let v = Paint.measureText(parseInt(this.startVal+(this.inter*(i-1)))).width+10;
-            Paint.strokeText(parseInt(this.startVal+(this.inter*(i-1))),this.core[0]-v ,this.core[1]-i*this.verticalInterval+6);
+
+            new BText().font("14px 宋体").setText(parseInt(this.startVal+(this.inter*(i-1))),this.core[0]-v ,this.core[1]-i*this.verticalInterval+6)
+            .stroke(context);
         }
 
         for(let i=1;i<this.scaleNumY;i++){
-            Paint.moveTo(this.core[0]+i*this.horizontalInterval, this.core[1]-5);
-            Paint.lineTo(this.core[0]+i*this.horizontalInterval, this.core[1]+5);
-            Paint.font("14px 宋体");
-            Paint.strokeText(this.meta[i-1],this.core[0]+i*this.horizontalInterval-context.measureText(this.meta[i-1]).width/2, this.core[1]+30);
+            pathGroup.line([this.core[0]+i*this.horizontalInterval, this.core[1]-5],[this.core[0]+i*this.horizontalInterval, this.core[1]+5]);
+
+            new BText().font("14px 宋体")
+            .setText(this.meta[i-1],this.core[0]+i*this.horizontalInterval-context.measureText(this.meta[i-1]).width/2, this.core[1]+30)
+            .stroke(context);
         }
-    }
-
-    drawArrow(context){
-        let Paint = BPaint.from(context);
-        Paint.moveTo(this.x(), this.y());
-        Paint.lineTo(this.x()-10, this.y()+20);
-
-        Paint.moveTo(this.x(), this.y());
-        Paint.lineTo(this.x()+10, this.y()+20);
-
-        Paint.moveTo(this.x()+this.horizontal, this.vertical);
-        Paint.lineTo(this.x()+this.horizontal-20, this.vertical+10);
-
-        Paint.moveTo(this.x()+this.horizontal, this.vertical);
-        Paint.lineTo(this.x()+this.horizontal-20, this.vertical-10);
-
     }
 }
 

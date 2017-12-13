@@ -4,9 +4,36 @@
 
 import BNode from '../Node/BNode.js'
 import BAxes from './BAxes.js'
-import BPaint from '../Base/BPaint.js'
+import BPathGroup from '../Drafting/BPath.js'
+import BInk from '../Drafting/Style/BInk.js'
 
-export class BElement extends BNode{
+export class BHistogram extends BNode{
+
+    constructor(width,height){
+        super();
+        this.data = null; //记录节点数据
+        this.width = width;
+        this.height = height;
+
+        this.oldElemet = null;
+
+        this.isHover = false;
+    }
+
+    draw(contact,context){
+        let pathGroup = new BPathGroup()
+        .path()
+        .rect(this.x(),this.y(),this.width,this.height).style({'fillStyle':'red'})
+        
+        if(this.isHover){
+            pathGroup.setStyle(new BInk().fillStyle('green'));
+        }
+        pathGroup.fill(context);
+    }
+
+}
+
+export class BBrokenLine extends BNode{
 
     constructor(width){
         super();
@@ -20,19 +47,14 @@ export class BElement extends BNode{
     }
 
     draw(contact,context){
-        let Paint = BPaint.from(context);
-        Paint.beginPath();
-        Paint.arc(this.x(),this.y(),this.width/2,0,2*Math.PI);
+        let path = new BPathGroup().path().arc(this.x(),this.y(),this.width/2,0,2*Math.PI);
         if(this.isHover){
-            Paint.fill();
+            path.fill(context);
         }else{
-            Paint.stroke();
+            path.stroke(context);
         }
         if(this.oldElemet !=null){
-            Paint.beginPath();
-            Paint.moveTo(this.oldElemet.x(), this.oldElemet.y());
-            Paint.lineTo(this.x(), this.y());
-            Paint.stroke();
+            path.path().line([this.oldElemet.x(), this.oldElemet.y()],[this.x(), this.y()]).stroke(context);
         }
     }
 
@@ -76,7 +98,7 @@ class BLineChart extends BNode{
 
     init(){
         this.addChild(this.axes);
-        this.drawElement();
+        this.drawHistogram();
         this.setPosition([this.width/2,this.height/2]);
     }
 
@@ -90,15 +112,41 @@ class BLineChart extends BNode{
         while (elem = this.elemList.pop()){
             this.removeChild(elem);
         }
-        this.drawElement();
+        this.drawHistogram();
     }
 
-    drawElement(){
+
+    drawHistogram(){
+        for(let i=0;i<this.data.length;i++){
+
+            let posElem = new BHistogram(20,(this.data[i]/this.axes.inter)*this.axes.verticalInterval);
+
+            posElem.setPosition([
+                this.axes.core[0]+this.axes.horizontalInterval*(1+i),
+                this.axes.core[1] - posElem.height/2
+            ]);
+
+            this.addChild(posElem);
+
+            posElem.addEventListener('mouseover',function (e) {
+                posElem.isHover = true;
+            });
+
+            posElem.addEventListener('mouseout',function (e) {
+                posElem.isHover = false;
+            });
+
+
+            this.elemList.push(posElem);
+        }
+    }
+
+    drawBrokenLine(){
 
         let oldElem = null;
         for(let i=0;i<this.data.length;i++){
 
-            let posElem = new BElement(10);
+            let posElem = new BBrokenLine(10);
 
             posElem.setPosition([
                 this.axes.core[0]+this.axes.horizontalInterval*(1+i),

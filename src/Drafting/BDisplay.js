@@ -1,5 +1,9 @@
 import BPaint from '../Base/BPaint.js'
 import BObject from '../Base/BObject.js'
+import BInk from './Style/BInk.js'
+import BShadow from './Style/BShadow.js'
+import BStrokes from './Style/BStrokes'
+import BPattern from './Style/BPattern.js'
 class BDisplay extends BObject{
     constructor(){
         super();
@@ -8,6 +12,16 @@ class BDisplay extends BObject{
         this._descriPath = [];
         this.isPath = false;
         this.isBegin = false;
+
+        //style type func
+        this.inkArr = ['strokeStyle','fillStyle','globalAlpha'];
+        this.shadowArr = ['shadow'];
+        this.strokesArr = ['lineCap','lineJoin','lineWidth','miterLimit','lineDash','lineDasgOffset'];
+
+        this.ink = null;
+        this.shadow = null;
+        this.strokes = null;
+        this.pattern = null;
     }
 
     analysis(context){
@@ -43,9 +57,58 @@ class BDisplay extends BObject{
     setStyle(...styleList){
         // this._describList.push()
         styleList.forEach((style)=>{
+            if(style == null) return false;
             this._describList.push({type:'style',styleList:style.styleList()});
         });
         return this;
+    }
+
+    /**
+     *  解析对象来进行样式绘画
+     * @param {*style} css 
+     */
+    style(css){
+
+        if((typeof css=='string')&&css.constructor==String){
+            this.parseStyleforString(css);
+        }
+
+        if((typeof css=='object')&&css.constructor==Object){
+            this.parseStyleforObject(css);
+        }
+        this.setStyle(this.ink,this.shadow,this.strokes);
+    }
+
+    parseStyleforString(css){
+        try{
+            this.parseStyleforObject(JSON.parse(css));
+        }catch(e){
+            console.log('cssString JSON 解析失败');
+        }
+    }
+
+    parseStyleforObject(css){
+        for (const style in css) {
+
+            if(this.inkArr.includes(style)){
+                if(this.ink == null){
+                    this.ink = new BInk();
+                }
+                this.ink[style](css[style]);
+            }
+            if(this.shadowArr.includes(style)){
+                if(this.shadow == null){
+                    this.shadow = new BShadow();
+                }
+                this.shadow[style](css[style]);
+            }
+            if(this.strokesArr.includes(style)){
+                if(this.strokes ==null){
+                    this.strokes = new BStrokes();
+                }
+                this.strokes[style](css[style]);
+            }
+        }
     }
 
     pushDesc(action,params){
@@ -145,8 +208,8 @@ class BDisplay extends BObject{
     _drawPath(elem){
         switch(elem.action) {
             case 'line':
-                this.Paint.moveTo(elem.params[0].x(),elem.params[0].y());
-                this.Paint.lineTo(elem.params[1].x(),elem.params[1].y());
+                this.Paint.moveTo(elem.params[0][0],elem.params[0][1]);
+                this.Paint.lineTo(elem.params[1][0],elem.params[1][1]);
                 break;
             case 'bezier':
                 if(posArr.length > 1){

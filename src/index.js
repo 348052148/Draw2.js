@@ -62,7 +62,7 @@ lineChart.setPosition([100,100]);
 
 lineChart.init();
 
-// scene.addChild(lineChart);
+scene.addChild(lineChart);
 
 lineChart.addEventListener('mousedown',function () {
     let data = [100,300,400,200,500,1000,450,300,750];
@@ -103,7 +103,7 @@ pathTest.draw = function (c,context) {
 };
 
 
-scene.addChild(pathTest);
+// scene.addChild(pathTest);
 
 director.run();
 

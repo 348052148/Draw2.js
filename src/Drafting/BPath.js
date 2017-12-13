@@ -66,6 +66,11 @@ class BPathGroup extends BContainer{
         return this;
     }
 
+    style(css){
+        this.currentPath.style(css);
+        return this;
+    }
+
     path(){
         this.currentPath = new BPath();
         this.pathList.push(this.currentPath);

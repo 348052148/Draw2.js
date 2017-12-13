@@ -18,7 +18,7 @@ class BInk extends BStyle{
     }
 
     //设置透明度
-    setGlobalAlpha(gAlpha) {
+    globalAlpha(gAlpha) {
         this.push('setGlobalAlpha',[gAlpha]);
         return this;
     };
