@@ -1,16 +1,23 @@
 import BPaint from '../Base/BPaint.js'
-class BImage{
+import BDisplay from './BDisplay.js'
+class BImage extends BDisplay{
 
-    constructor(context){
-        this.Paint = new BPaint.from(context);
+    constructor(){
+        super();
     }
 
     drawImage(image,x,y,w=null,h=null){
-        this.Paint.drawImage(image,x,y,w,h);
+        this.pushDesc('drawImage',[image,x,y,w,h]);
+        return this;
     }
 
     drawImageCut(image,x,y,width,height,cutRegion){
-        this.context.drawImage(image,cutRegion.sx,cutRegion.sy,cutRegion.swidth,cutRegion.sheight,x,y,width,height);
+        this.pushDesc('drawImageCut',[image,cutRegion.sx,cutRegion.sy,cutRegion.swidth,cutRegion.sheight,x,y,width,height]);
+        return this;
+    }
+
+    draw(context){
+        this.analysis(context);
     }
 
 }

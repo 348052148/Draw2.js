@@ -29,6 +29,14 @@ class BPaint  extends BObject{
         this.context.fillStyle = color;
     };
 
+    strokeStyle(color){
+        this.context.strokeStyle = color;
+    }
+
+    fillStyle(color){
+        this.context.fillStyle = color;
+    }
+
     //设置透明度
     setGlobalAlpha(gAlpha) {
         this.context.globalAlpha =  gAlpha;
@@ -181,7 +189,10 @@ class BPaint  extends BObject{
         this.context.textBaseline=textBaseline;
     };
     //在画布上绘制“被填充的”文本
-    fillText(text,x,y,maxWidth){
+    fillText(text,x,y,maxWidth=0){
+        if(maxWidth==0){
+            return this.context.fillText(text,x,y);
+        }
         return this.context.fillText(text,x,y,maxWidth);
     };
     //文本方向。可能的值包括：ltr, rtl, inherit。默认值是 inherit。
@@ -189,7 +200,10 @@ class BPaint  extends BObject{
         this.context.direction = val;
     };
     //在画布上绘制文本（无填充）
-    strokeText(text,x,y,maxWidth){
+    strokeText(text,x,y,maxWidth=0){
+        if(maxWidth==0){
+            return this.context.strokeText(text,x,y);
+        }
         return this.context.strokeText(text,x,y,maxWidth);
     };
     //返回包含指定文本宽度的对象
@@ -204,7 +218,7 @@ class BPaint  extends BObject{
         }
         this.context.drawImage(elem,x-w/2,y-h/2,w,h);
     };
-    
+
     drawImageCut(elem,sx,sy,swidth,sheight,x,y,width,height){
         return this.context.drawImage(elem,sx,sy,swidth,sheight,x,y,width,height);
     };

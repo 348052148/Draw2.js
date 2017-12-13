@@ -1,6 +1,11 @@
+/**
+ * 
+ */
 import BPaint from '../Base/BPaint.js'
-class BPixel {
+import BDisplay from  './BDisplay.js'
+class BPixel extends BDisplay{
     constructor(context){
+        super();
         this.Paint = new BPaint(context);
         this.imageData = null; // data width height
     }

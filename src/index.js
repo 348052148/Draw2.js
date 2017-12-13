@@ -19,9 +19,13 @@ import forward from './Assets/image/forward.png'
 import filterJpg from './Assets/image/filter.jpg'
 import arrow from './Assets/image/arrow.png';
 import BLineChart from './Chat/BLineChart.js'
-import BPath from './Drafting/BPath.js'
+import BPathGroup from './Drafting/BPath.js'
 import BPoint from './Base/BPoint.js'
-
+import BImage from './Drafting/BImage.js'
+import BText from './Drafting/BText.js'
+import BStrokes from './Drafting/Style/BStrokes.js'
+import BInk from './Drafting/Style/BInk'
+import BShadow from './Drafting/Style/BShadow.js'
 import Box2D from 'box2dweb'
 
 
@@ -68,16 +72,36 @@ lineChart.addEventListener('mousedown',function () {
 let pathTest = new BSprite(100,100);
 
 pathTest.draw = function (c,context) {
-    let path = new BPath();
-    path.polygon([
+    let path = new BPathGroup();
+    path.path().polygon([
         new BPoint([0,0]),
         new BPoint([100,100]),
         new BPoint([300,200]),
         new BPoint([200,50])
-    ]);
-    path.analysis(context);
-    path.fill();
+    ])
+    .setStyle(new BInk().strokeStyle('blue'))
+    .stroke(context)
+    .path()
+    .rect(300,100,100,100)
+    .fill(context);
+
+    let image = new Image();
+    image.src = arrow;
+    // context.drawImage(image,100,100);
+    new BImage().drawImage(image,100,100,150,30).draw(context);
+
+    new BText()
+    .setStyle(
+        new BInk()
+        .strokeStyle('green')
+        ,new BStrokes().lineWidth(2)
+        ,new BShadow().setShadow(2,2,2,'rgba(0, 0, 0, 0.5)')
+    )
+    .font('40px 宋体')
+    .setText('你好啊',300,300)
+    .stroke(context);
 };
+
 
 scene.addChild(pathTest);
 
