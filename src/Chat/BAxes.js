@@ -3,10 +3,8 @@
  */
 import BNode from '../Node/BNode.js'
 import BPoint from '../Base/BPoint.js'
-import BPaint from "../Base/BPaint";
-import BPathGroup from "../Drafting/BPath.js"
-import BStrokes from '../Drafting/Style/BStrokes.js'
-import BText from '../Drafting/BText.js'
+import BPaint from '../Base/BPaint.js'
+import BPen from '../Drafting/BPen.js'
 
 class BAxes extends BNode{
 
@@ -41,7 +39,7 @@ class BAxes extends BNode{
     }
 
     draw(contact,context){
-        let pathGroup = new BPathGroup();
+        let pathGroup = BPen.PathGroup();
 
         pathGroup.path()
 
@@ -71,17 +69,18 @@ class BAxes extends BNode{
             
             let v = Paint.measureText(parseInt(this.startVal+(this.inter*(i-1)))).width+10;
 
-            new BText().font("14px 宋体").setText(parseInt(this.startVal+(this.inter*(i-1))),this.core[0]-v ,this.core[1]-i*this.verticalInterval+6)
+            BPen.Text().font("14px 宋体").setText(parseInt(this.startVal+(this.inter*(i-1))),this.core[0]-v ,this.core[1]-i*this.verticalInterval+6)
             .stroke(context);
         }
 
         for(let i=1;i<this.scaleNumY;i++){
             pathGroup.line([this.core[0]+i*this.horizontalInterval, this.core[1]-5],[this.core[0]+i*this.horizontalInterval, this.core[1]+5]);
 
-            new BText().font("14px 宋体")
+            BPen.Text().font("14px 宋体")
             .setText(this.meta[i-1],this.core[0]+i*this.horizontalInterval-context.measureText(this.meta[i-1]).width/2, this.core[1]+30)
             .stroke(context);
         }
+        pathGroup.stroke(context);
     }
 }
 

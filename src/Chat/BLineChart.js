@@ -4,69 +4,12 @@
 
 import BNode from '../Node/BNode.js'
 import BAxes from './BAxes.js'
-import BPathGroup from '../Drafting/BPath.js'
-import BInk from '../Drafting/Style/BInk.js'
-
-export class BHistogram extends BNode{
-
-    constructor(width,height){
-        super();
-        this.data = null; //记录节点数据
-        this.width = width;
-        this.height = height;
-
-        this.oldElemet = null;
-
-        this.isHover = false;
-    }
-
-    draw(contact,context){
-        let pathGroup = new BPathGroup()
-        .path()
-        .rect(this.x(),this.y(),this.width,this.height).style({'fillStyle':'red'})
-        
-        if(this.isHover){
-            pathGroup.setStyle(new BInk().fillStyle('green'));
-        }
-        pathGroup.fill(context);
-    }
-
-}
-
-export class BBrokenLine extends BNode{
-
-    constructor(width){
-        super();
-        this.data = null; //记录节点数据
-        this.width = width;
-        this.height = this.width;
-
-        this.oldElemet = null;
-
-        this.isHover = false;
-    }
-
-    draw(contact,context){
-        let path = new BPathGroup().path().arc(this.x(),this.y(),this.width/2,0,2*Math.PI);
-        if(this.isHover){
-            path.fill(context);
-        }else{
-            path.stroke(context);
-        }
-        if(this.oldElemet !=null){
-            path.path().line([this.oldElemet.x(), this.oldElemet.y()],[this.x(), this.y()]).stroke(context);
-        }
-    }
-
-    lineTo(elem){
-        this.oldElemet = elem;
-    }
-
-}
+import BBrokenLine from './BBrokenLine.js'
+import BHistogram from './BHistogram.js'
 
 class BLineChart extends BNode{
     // data meta width=长度 height=宽度
-    constructor(data,meta,width=1800,height=800){
+    constructor(data,meta,width=1000,height=800){
         super();
         this.data = data;
 
@@ -98,7 +41,7 @@ class BLineChart extends BNode{
 
     init(){
         this.addChild(this.axes);
-        this.drawHistogram();
+        this.drawBrokenLine();
         this.setPosition([this.width/2,this.height/2]);
     }
 
@@ -112,14 +55,14 @@ class BLineChart extends BNode{
         while (elem = this.elemList.pop()){
             this.removeChild(elem);
         }
-        this.drawHistogram();
+        this.drawBrokenLine();
     }
 
 
     drawHistogram(){
         for(let i=0;i<this.data.length;i++){
 
-            let posElem = new BHistogram(20,(this.data[i]/this.axes.inter)*this.axes.verticalInterval);
+            let posElem = new BHistogram(80,(this.data[i]/this.axes.inter)*this.axes.verticalInterval,this.data[i]);
 
             posElem.setPosition([
                 this.axes.core[0]+this.axes.horizontalInterval*(1+i),
@@ -146,7 +89,7 @@ class BLineChart extends BNode{
         let oldElem = null;
         for(let i=0;i<this.data.length;i++){
 
-            let posElem = new BBrokenLine(10);
+            let posElem = new BBrokenLine(10,this.data[i]);
 
             posElem.setPosition([
                 this.axes.core[0]+this.axes.horizontalInterval*(1+i),

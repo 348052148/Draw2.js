@@ -9,12 +9,14 @@ function resolve (dir) {
 
 module.exports = {
     entry:{
-        drawjs:["./src/index.js"]
+        drawjs:["./src/index.js"],
+        // main:"./example/linchart.js"
     },
 
     output: {
         path: path.resolve(__dirname,'dist'),
-        filename: "[name][hash].js"
+        filename: "D2.js",
+        library:'D2'
     },
 
     devtool: 'inline-source-map',

@@ -76,7 +76,7 @@ class BDisplay extends BObject{
         if((typeof css=='object')&&css.constructor==Object){
             this.parseStyleforObject(css);
         }
-        this.setStyle(this.ink,this.shadow,this.strokes);
+        return this.setStyle(this.ink,this.shadow,this.strokes);
     }
 
     parseStyleforString(css){
