@@ -7,7 +7,7 @@ class BShadow extends BStyle{
         super();
     }
 
-    setShadow(shadowOffsetX=0,shadowOffsetY=0,shadowBlur=0,shadowColor=''){
+    shadow(shadowOffsetX=0,shadowOffsetY=0,shadowBlur=0,shadowColor=''){
         this.push('setShadow',[shadowOffsetX,shadowOffsetY,shadowBlur,shadowColor]);
         return this;
     }

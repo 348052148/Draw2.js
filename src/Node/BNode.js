@@ -28,6 +28,8 @@ class BNode extends BDraw{
         this.corePos = new BPoint();
         //基础坐标
         this.basePos = new BPoint();
+        // 锚点
+        this.anchorPos = [0.5,0.5]; 
 
         this.event = new BEvent();
     }
@@ -110,11 +112,13 @@ class BNode extends BDraw{
 
     //----Position--
     x(){
-        return this.position.x();
+        let aX = ((this.anchorPos[0]-0.5)*this.width);
+        return this.position.x()-aX;
     }
 
     y(){
-        return this.position.y();
+        let aY = ((this.anchorPos[1]-0.5)*this.height);
+        return this.position.y()-aY;
     }
 
     setBasePosition(pos){
@@ -158,10 +162,17 @@ class BNode extends BDraw{
     setRotate(angle){
         this.angle = angle;
     }
-
+    // 设置锚点
+    setAnchorPos(pos){
+        this.anchorPos = pos;
+        this._setCospos();
+    }
     //模拟 scale 操作
     _setCospos(){
-        this.corePos = {x:this.x(),y:this.y()};
+        this.corePos = {
+            x:this.x()+((this.anchorPos[0]-0.5)*this.width)
+            ,y:this.y()+((this.anchorPos[1]-0.5)*this.height)
+        };
     }
 
 }

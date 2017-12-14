@@ -28,7 +28,7 @@ class BStrokes extends BStyle{
         return this;
     };
     //设置当前虚线样式
-    setLineDash (val) {
+    lineDash (val) {
         this.push('setLineDash',[val]);
         return this;
     };

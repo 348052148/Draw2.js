@@ -19,7 +19,7 @@ class BHistogram extends BNode{
     draw(contact,context){
         let pathGroup = BPen.PathGroup()
         .path()
-        .rect(this.x(),this.y(),this.width,this.height).style({'fillStyle':'red'})
+        .rect(this.x(),this.y(),this.width,this.height).style({'fillStyle':'blue'})
         
         if(this.isHover){
             pathGroup.style({fillStyle:'green'});

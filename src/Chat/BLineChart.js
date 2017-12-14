@@ -6,12 +6,15 @@ import BNode from '../Node/BNode.js'
 import BAxes from './BAxes.js'
 import BBrokenLine from './BBrokenLine.js'
 import BHistogram from './BHistogram.js'
+import BMoveTo from '../Actions/BMoveTo.js'
 
 class BLineChart extends BNode{
     // data meta width=长度 height=宽度
     constructor(data,meta,width=1000,height=800){
         super();
         this.data = data;
+
+        this.mode = 'line';
 
         this.width = width;
         this.height = height;
@@ -41,7 +44,13 @@ class BLineChart extends BNode{
 
     init(){
         this.addChild(this.axes);
-        this.drawBrokenLine();
+        if(this.mode == 'line'){
+            this.drawBrokenLine();
+        }
+        if(this.mode == 'histo'){
+            this.drawHistogram();
+        }
+    
         this.setPosition([this.width/2,this.height/2]);
     }
 
@@ -55,7 +64,12 @@ class BLineChart extends BNode{
         while (elem = this.elemList.pop()){
             this.removeChild(elem);
         }
-        this.drawBrokenLine();
+        if(this.mode == 'line'){
+            this.drawBrokenLine();
+        }
+        if(this.mode == 'histo'){
+            this.drawHistogram();
+        }
     }
 
 
@@ -66,7 +80,7 @@ class BLineChart extends BNode{
 
             posElem.setPosition([
                 this.axes.core[0]+this.axes.horizontalInterval*(1+i),
-                this.axes.core[1] - posElem.height/2
+                this.axes.core[1]
             ]);
 
             this.addChild(posElem);
@@ -78,6 +92,12 @@ class BLineChart extends BNode{
             posElem.addEventListener('mouseout',function (e) {
                 posElem.isHover = false;
             });
+
+            posElem.runAction(new BMoveTo(
+                this.axes.core[0]+this.axes.horizontalInterval*(1+i),
+                this.axes.core[1] - posElem.height/2,
+                this.data[i] / 80
+            ));
 
 
             this.elemList.push(posElem);
@@ -92,8 +112,8 @@ class BLineChart extends BNode{
             let posElem = new BBrokenLine(10,this.data[i]);
 
             posElem.setPosition([
-                this.axes.core[0]+this.axes.horizontalInterval*(1+i),
-                this.axes.core[1]-(this.data[i]/this.axes.inter)*this.axes.verticalInterval
+                this.axes.core[0]+this.axes.horizontalInterval*(1+i),this.axes.core[1]
+                // this.axes.core[1]-(this.data[i]/this.axes.inter)*this.axes.verticalInterval
             ]);
 
             this.addChild(posElem);
@@ -113,6 +133,13 @@ class BLineChart extends BNode{
             }
 
             posElem.lineTo(oldElem);
+            
+            // action
+            posElem.runAction(new BMoveTo(
+                this.axes.core[0]+this.axes.horizontalInterval*(1+i),
+                this.axes.core[1]-(this.data[i]/this.axes.inter)*this.axes.verticalInterval,
+                this.data[i] / 80
+            ));
 
             oldElem = posElem;
 

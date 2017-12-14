@@ -19,7 +19,10 @@ class BMoveTo extends BAction{
             ySpeed = 0;
         }
 
-        if(xSpeed == 0 && ySpeed ==0){ this.isActive = false;}
+        if(xSpeed == 0 && ySpeed ==0){ 
+            this.isActive = false;
+            obj.setPosition([this.mx,this.my]);
+        }
 
         obj.setPosition([obj.x()+xSpeed,obj.y()+ySpeed]);
     };
